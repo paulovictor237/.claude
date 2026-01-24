@@ -12,4 +12,9 @@
 /hooks/rio/logs
 .credentials.json
 /plugins/known_marketplaces.json
+/paste-cache
+/cache
+/tasks
+/telemetry
+.DS_Store
 stats-cache.json
