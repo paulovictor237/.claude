@@ -1,7 +1,11 @@
 {
   "permissions": {
+    "ask": ["Git commit"],
     "defaultMode": "default"
   },
-  "model": "sonnet",
-  "language": "portugues-br"
+  "language": "portugues-br",
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); model=$(echo \"$input\" | jq -r '.model.display_name'); project_dir=$(echo \"$input\" | jq -r '.workspace.project_dir'); project_name=$(basename \"$project_dir\"); branch=$(git -C \"$project_dir\" rev-parse --abbrev-ref HEAD 2>/dev/null || echo \"no-git\"); context_size=$(echo \"$input\" | jq -r '.context_window.context_window_size'); current_input=$(echo \"$input\" | jq -r '.context_window.current_usage.input_tokens // 0'); current_output=$(echo \"$input\" | jq -r '.context_window.current_usage.output_tokens // 0'); cache_read=$(echo \"$input\" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0'); current_total=$((current_input + current_output + cache_read)); current_k=$(awk -v total=\"$current_total\" 'BEGIN {printf \"%.0f\", total / 1000}'); context_k=$(awk -v size=\"$context_size\" 'BEGIN {printf \"%.0f\", size / 1000}'); cost=$(awk -v total=\"$current_total\" 'BEGIN {printf \"%.4f\", (total / 1000) * 0.01}'); block_time=\"\"; if command -v ccusage &> /dev/null; then ccusage_output=$(ccusage statusline 2>/dev/null); if [ -n \"$ccusage_output\" ]; then block_time=$(echo \"$ccusage_output\" | grep -oE '[0-9]+h [0-9]+m left' || echo \"$ccusage_output\" | grep -oE '[0-9]+m left' || echo \"\"); if [ -n \"$block_time\" ]; then block_time=\" | \\033[35m$block_time\\033[0m\"; fi; fi; fi; printf \"\\033[32m📦 %s\\033[0m | \\033[35m🔀 %s\\033[0m | \\033[36m👾 %s\\033[0m | \\033[33m🔋 %sk/%sk\\033[0m | \\033[31m💎 $%s\\033[0m%s\" \"$project_name\" \"$branch\" \"$model\" \"$current_k\" \"$context_k\" \"$cost\" \"$block_time\""
+  }
 }
