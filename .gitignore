@@ -11,7 +11,8 @@
 /history.jsonl
 /hooks/rio/logs
 .credentials.json
-/plugins/known_marketplaces.json
+/plugins/*
+!/plugins/known_marketplaces.json
 /paste-cache
 /cache
 /tasks

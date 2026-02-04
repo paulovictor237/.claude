@@ -1,0 +1,18 @@
+{
+  "claude-code-plugins": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-code"
+    },
+    "installLocation": "/Users/paulovictor237/.claude/plugins/marketplaces/claude-code-plugins",
+    "lastUpdated": "2026-02-04T23:37:23.302Z"
+  },
+  "px-center": {
+    "source": {
+      "source": "github",
+      "repo": "px-center/px-coding-agents"
+    },
+    "installLocation": "/Users/paulovictor237/.claude/plugins/marketplaces/px-center",
+    "lastUpdated": "2026-02-04T22:11:18.947Z"
+  }
+}
