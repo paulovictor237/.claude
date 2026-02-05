@@ -1,11 +1,11 @@
 {
-  "claude-code-plugins": {
+  "claude-plugins-official": {
     "source": {
       "source": "github",
-      "repo": "anthropics/claude-code"
+      "repo": "anthropics/claude-plugins-official"
     },
-    "installLocation": "/Users/paulovictor237/.claude/plugins/marketplaces/claude-code-plugins",
-    "lastUpdated": "2026-02-04T23:37:23.302Z"
+    "installLocation": "/Users/paulovictor237/.claude/plugins/marketplaces/claude-plugins-official",
+    "lastUpdated": "2026-02-05T01:27:25.703Z"
   },
   "px-center": {
     "source": {
@@ -13,6 +13,6 @@
       "repo": "px-center/px-coding-agents"
     },
     "installLocation": "/Users/paulovictor237/.claude/plugins/marketplaces/px-center",
-    "lastUpdated": "2026-02-04T22:11:18.947Z"
+    "lastUpdated": "2026-02-05T01:28:23.228Z"
   }
 }
