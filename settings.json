@@ -1,8 +1,11 @@
 {
   "permissions": {
-    "ask": ["Git commit"],
+    "ask": [
+      "Git commit"
+    ],
     "defaultMode": "default"
   },
+  "model": "sonnet",
   "hooks": {
     "Notification": [
       {
@@ -46,6 +49,5 @@
     "typescript-lsp@claude-plugins-official": true,
     "playwright@claude-plugins-official": true
   },
-  "language": "portugues-br",
-  "model": "sonnet"
+  "language": "portugues-br"
 }
