@@ -10,6 +10,20 @@
 - Examples: `acli jira issue create`, `acli confluence page list`, `acli jira issue view`, etc.
 - The Atlassian CLI provides more reliable and direct access to Atlassian functionality
 
+## LSP (Language Server Protocol) Usage
+
+- **ALWAYS use LSP when convenient** for code analysis, navigation, and understanding
+- LSP provides accurate type information, definitions, references, and diagnostics
+- Prefer LSP for tasks such as:
+  - Finding function/class definitions and implementations
+  - Discovering all references to a symbol
+  - Getting accurate type information
+  - Identifying compilation errors and warnings
+  - Code completion suggestions
+  - Refactoring operations (rename, extract, etc.)
+- LSP is especially useful when working with strongly-typed languages (TypeScript, Go, Rust, Java, C#, etc.)
+- Use LSP to complement other tools like Grep and Glob for more precise code navigation
+
 ## Context References
 
 Para configurações específicas de projetos e ferramentas, consulte os arquivos na pasta `context/`:
