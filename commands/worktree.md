@@ -1,8 +1,8 @@
 ---
-name: new-worktree
+name: worktree
 description: Create a new git worktree for isolated feature development
 argument-hint: [feature-name]
-allowed-tools: Bash(git *), Read, Glob, AskUserQuestion
+allowed-tools: Bash(git *), Read, Glob
 ---
 
 <objective>
@@ -42,7 +42,6 @@ Worktrees will be organized in: `~/.claude-worktree/{project-name}/{workflow-nam
    - Use format: `~/.claude-worktree/{project-name}/{sanitized-workflow-name}`
    - Execute: `git worktree add -b [branch-name] [path] [start-point]`
 6. Verify worktree creation
-7. Change to the new worktree directory automatically using `cd`
 </process>
 
 <verification>
@@ -54,20 +53,19 @@ After creating the worktree, verify:
 </verification>
 
 <success_criteria>
+
 - New worktree directory created successfully
 - Branch properly created or tracking remote
 - Git status shows clean working tree in new worktree
-- User receives clear path to new worktree
-- Instructions provided for switching to new worktree (cd command)
-</success_criteria>
+- User receives clear path to new worktree and cd command
+  </success_criteria>
 
 <output>
 Upon successful creation:
 1. Show full path to new worktree: `~/.claude-worktree/{project-name}/{workflow-name}`
-2. Automatically change directory to the new worktree using `cd`
-3. Display current branch in new worktree
-4. Show git status
-5. Provide reminder: Use `git worktree remove [path]` when done
+2. Display current branch in new worktree
+3. Show git status from the new worktree
+4. Provide clear `cd` command for switching to the worktree
 
-Note: The shell working directory will be changed to the new worktree automatically.
+Keep the output clean and minimal - no extra notes or reminders.
 </output>
