@@ -12,7 +12,7 @@
 
 ## Git Worktrees
 
-- **Worktree Directory:** `~/.claude/.claude-worktree/{project-name}/{workflow-name}`
+- **Worktree Directory:** `~/.claude/.claude-worktrees/{project-name}/{workflow-name}`
 - Localização global centralizada para todos os worktrees
 
 ## Context References

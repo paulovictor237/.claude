@@ -10,7 +10,7 @@ Create a new git worktree for the specified feature/workflow in an isolated dire
 
 This allows working on multiple features simultaneously without switching branches or stashing changes, maintaining a clean separation of work contexts.
 
-The worktree will be created in: `~/.claude-worktree/{project-name}/{workflow-name}`
+The worktree will be created in: `~/.claude-worktrees/{project-name}/{workflow-name}`
 </objective>
 
 <context>
@@ -21,14 +21,14 @@ Current repository state:
 - Remote branches: !`git branch -r | head -10`
 
 Project name will be extracted from the repository root directory name.
-Worktrees will be organized in: `~/.claude-worktree/{project-name}/{workflow-name}`
+Worktrees will be organized in: `~/.claude-worktrees/{project-name}/{workflow-name}`
 </context>
 
 <process>
 1. Validate that we're in a git repository and worktree feature is available
 2. Determine the base directory for worktrees:
    - Get repository name from current directory or git remote
-   - Use pattern: `~/.claude-worktree/{project-name}/{workflow-name}`
+   - Use pattern: `~/.claude-worktrees/{project-name}/{workflow-name}`
    - Create directory structure if it doesn't exist
 3. Sanitize workflow name from argument:
    - Convert to lowercase
@@ -39,7 +39,7 @@ Worktrees will be organized in: `~/.claude-worktree/{project-name}/{workflow-nam
    - If exists locally: warn and ask to use different name
    - If new: create new branch in worktree
 5. Create the worktree:
-   - Use format: `~/.claude-worktree/{project-name}/{sanitized-workflow-name}`
+   - Use format: `~/.claude-worktrees/{project-name}/{sanitized-workflow-name}`
    - Execute: `git worktree add -b [branch-name] [path] [start-point]`
 6. Verify worktree creation
 </process>
@@ -62,7 +62,7 @@ After creating the worktree, verify:
 
 <output>
 Upon successful creation:
-1. Show full path to new worktree: `~/.claude-worktree/{project-name}/{workflow-name}`
+1. Show full path to new worktree: `~/.claude-worktrees/{project-name}/{workflow-name}`
 2. Display current branch in new worktree
 3. Show git status from the new worktree
 4. Provide clear `cd` command for switching to the worktree
