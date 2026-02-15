@@ -5,6 +5,7 @@
     ],
     "defaultMode": "default"
   },
+  "model": "haiku",
   "hooks": {
     "Notification": [
       {
@@ -48,6 +49,5 @@
     "typescript-lsp@claude-plugins-official": true,
     "playwright@claude-plugins-official": true
   },
-  "language": "portugues-br",
-  "model": "sonnet"
+  "language": "portugues-br"
 }

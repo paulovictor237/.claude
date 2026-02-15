@@ -34,12 +34,9 @@ projeto/
 │           ├── architecture.md      #   Como o roteamento funciona
 │           └── development.md       #   Step-by-step para criar features
 │
-├── packages/
-│   └── db/
-│       └── CLAUDE.md                # Guardrails Criticos (-> Secao 4: Guardrails)
-│
-└── specs/                           # Regras de Negocio (-> Secao 5: CDD)
-    └── feature-y.md                 #   Intencao > Implementacao
+└── packages/
+    └── db/
+        └── CLAUDE.md                # Guardrails Criticos (-> Secao 4: Guardrails)
 ```
 
 Esse mapa e seu indice mental. Quando quiser saber "onde coloco X?", volte aqui.
@@ -197,8 +194,12 @@ px-nexus/
 │       └── agent_docs/          # Nivel 3 — Roteamento, dev workflow
 │           ├── architecture.md
 │           └── development.md
-├── packages/db/CLAUDE.md        # Nivel 2 — Migrations, naming, guardrails
-└── collections/CLAUDE.md        # Nivel 2 — Bruno collections, patterns
+├── packages/
+│   ├── db/CLAUDE.md             # Nivel 2 — Migrations, naming, guardrails
+│   └── ui/CLAUDE.md             # Nivel 2 — Component patterns
+└── .claude/
+    └── specs/                   # Nivel 3 — Checkpoints de features
+        └── archive/             # Specs historicas
 ```
 
 ### Como isso economiza tokens
@@ -331,7 +332,7 @@ Criacao  →  Alinhamento  →  Implementacao  →  Arquivo
 .claude/specs/feature-x.md  →  .claude/specs/archive/feature-x.md
 ```
 
-Specs concluidas nao sao deletadas — sao **arquivadas**. Elas servem como memoria historica: em futuros refactorings, a IA pode consultar o arquivo para entender *por que* algo foi construido daquela forma.
+Specs concluidas nao sao deletadas — sao **arquivadas** em `.claude/specs/archive/`. Elas servem como memoria historica: em futuros refactorings, a IA pode consultar o arquivo para entender *por que* algo foi construido daquela forma.
 
 ### Quando usar CDD vs. quando e overkill
 

@@ -65,13 +65,16 @@
 ├── CLAUDE.md             # Visão Global (WHY-WHAT-HOW)
 ├── .claude/
 │   ├── specs/            # Checkpoints (Feature Specs)
+│   │   └── archive/      # Specs Históricas
+│   ├── knowledge/        # Doutrina (Arquitetura Profunda)
 │   └── session_ledger.md # Diário de Bordo (Handover)
 ├── apps/
 │   └── web/
 │       ├── CLAUDE.md     # Regras Locais do Frontend
 │       └── agent_docs/   # Doutrina (Como o roteamento funciona)
-└── packages/db/
-    └── CLAUDE.md         # Guardrails Críticos (Migrations!)</code></pre>
+└── packages/
+    ├── db/CLAUDE.md      # Guardrails Críticos (Migrations!)
+    └── ui/CLAUDE.md      # Component Patterns</code></pre>
             </section>
 
             <!-- Slide 4: WHY-WHAT-HOW -->
@@ -186,10 +189,10 @@ pnpm db:migrate -- --name X # OBRIGATÓRIO</code></pre>
                 <section>
                     <h3>Ciclo de Vida da Spec</h3>
                     <ol>
-                        <li><strong>Discovery:</strong> Escreva a intenção.</li>
+                        <li><strong>Discovery:</strong> Escreva a intenção em <code>.claude/specs/</code>.</li>
                         <li><strong>Validation:</strong> IA revisa o contrato.</li>
                         <li><strong>Execution:</strong> Implemente com checkpoints.</li>
-                        <li><strong>Pruning:</strong> Arquive para memória histórica.</li>
+                        <li><strong>Pruning:</strong> Mova para <code>.claude/specs/archive/</code>.</li>
                     </ol>
                 </section>
             </section>

@@ -89,7 +89,7 @@ project/
 ├── CLAUDE.md                   # Visao Global (este arquivo)
 ├── .claude/
 │   ├── knowledge/              # Doutrina: arquitetura profunda, guias de design
-│   ├── specs/                  # Checkpoints ativos (specs de features)
+│   ├── specs/                  # Checkpoints ativos (Spec-First Development)
 │   │   └── archive/            # Specs concluidas (memoria historica)
 │   └── session_ledger.md       # Handover de sessoes (diario de bordo)
 ├── apps/
@@ -97,10 +97,9 @@ project/
 │   │   └── CLAUDE.md           # Regras locais da API
 │   └── web/
 │       └── CLAUDE.md           # Regras locais do frontend
-├── packages/
-│   └── db/
-│       └── CLAUDE.md           # Regras locais do banco (guardrails criticos)
-└── specs/                      # Regras de negocio (o que construir)
+└── packages/
+    └── db/
+        └── CLAUDE.md           # Regras locais do banco (guardrails criticos)
 ```
 
 ### Principios de Modularidade
@@ -108,7 +107,7 @@ project/
 1. **Root CLAUDE.md**: Visao macro, stack global, comandos de orquestracao
 2. **App-specific CLAUDE.md**: Arquitetura interna, regras de ouro do dominio, comandos locais
 3. **knowledge/**: Explica conceitos abstratos que a IA nao consegue deduzir do codigo
-4. **specs/**: Separa Intencao (negocio) de Implementacao (codigo)
+4. **.claude/specs/**: Checkpoints para Spec-First Development — separa Intencao de Implementacao
 
 ### Padrao Semantico (WHY-WHAT-HOW)
 
@@ -219,7 +218,7 @@ Para cada app/pacote significativo:
 ```
 Para features complexas ja implementadas:
 1. Identifique as principais regras de negocio no codigo
-2. Gere specs retroativas em /specs para preservar a intencao original
+2. Gere specs retroativas em .claude/specs/ para preservar a intencao original
 3. Estas specs protegem contra refactorings que quebrem regras
 ```
 

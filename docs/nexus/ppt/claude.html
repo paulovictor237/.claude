@@ -434,12 +434,9 @@
 │           ├── architecture.md      #   Como o roteamento funciona
 │           └── development.md       #   Step-by-step para criar features
 │
-├── packages/
-│   └── db/
-│       └── CLAUDE.md                # Guardrails Críticos (→ Seção 4: Guardrails)
-│
-└── specs/                           # Regras de Negócio (→ Seção 5: CDD)
-    └── feature-y.md                 #   Intenção > Implementação</code></pre>
+└── packages/
+    └── db/
+        └── CLAUDE.md                # Guardrails Críticos (→ Seção 4: Guardrails)</code></pre>
 
                 <div class="highlight-box">
                     <strong>💡 Dica:</strong> Esse mapa é seu índice mental. Quando quiser saber "onde coloco X?", volte aqui.
@@ -594,6 +591,10 @@ Nível 3: Agent Docs / Knowledge → Doutrina profunda (carregado sob demanda)</
                 <h3 class="section-subtitle">Exemplo real: PX-Nexus tem 5 CLAUDE.md + 2 agent_docs</h3>
                 <pre><code>px-nexus/
 ├── CLAUDE.md                    # Nível 1 — Stack, comandos, guidelines
+├── .claude/
+│   ├── specs/                   # Nível 3 — Checkpoints de features
+│   │   └── archive/             # Specs historicas
+│   └── knowledge/               # Nível 3 — Guias de arquitetura
 ├── apps/
 │   ├── api/CLAUDE.md            # Nível 2 — Patterns tRPC, NestJS modules
 │   └── web/
@@ -601,8 +602,12 @@ Nível 3: Agent Docs / Knowledge → Doutrina profunda (carregado sob demanda)</
 │       └── agent_docs/          # Nível 3 — Roteamento, dev workflow
 │           ├── architecture.md
 │           └── development.md
-├── packages/db/CLAUDE.md        # Nível 2 — Migrations, naming, guardrails
-└── collections/CLAUDE.md        # Nível 2 — Bruno collections, patterns</code></pre>
+├── packages/
+│   ├── db/CLAUDE.md             # Nível 2 — Migrations, naming, guardrails
+│   └── ui/CLAUDE.md             # Nível 2 — Component patterns
+└── .claude/
+    └── specs/                   # Nível 3 — Checkpoints de features
+        └── archive/             # Specs historicas</code></pre>
 
                 <div class="highlight-box">
                     <strong>💰 Como isso economiza tokens:</strong>
@@ -753,7 +758,7 @@ pnpm db:migrate -- --name add_user_phone_field
 .claude/specs/feature-x.md  →  .claude/specs/archive/feature-x.md</code></pre>
 
                 <div class="card">
-                    <p>Specs concluídas não são deletadas — são <strong>arquivadas</strong>. Elas servem como memória histórica: em futuros refactorings, a IA pode consultar o arquivo para entender <em>por que</em> algo foi construído daquela forma.</p>
+                    <p>Specs concluídas não são deletadas — são <strong>arquivadas</strong> em <span class="inline-code">.claude/specs/archive/</span>. Elas servem como memória histórica: em futuros refactorings, a IA pode consultar o arquivo para entender <em>por que</em> algo foi construído daquela forma.</p>
                 </div>
 
                 <h3 class="section-subtitle">Quando usar CDD vs. quando é overkill</h3>
