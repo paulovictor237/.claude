@@ -168,7 +168,7 @@ def generate_report(include_in_progress=False):
             start_date = format_date(created)
             
             report_lines.append(f"*{summary} ({key})*")
-            report_lines.append(f"• *Link:* https://motoristapx.atlassian.net/browse/{key}")
+            report_lines.append(f"• *Link:* `https://motoristapx.atlassian.net/browse/{key}|{key}`")
             report_lines.append(f"• *Responsável:* {assignee}")
             report_lines.append(f"• *Dias em andamento:* *{days_in_progress} dias* (Início: {start_date})")
             report_lines.append(f"• *Dias parado na coluna atual:* *{days_in_col} dias* (Desde: {since_date})\n")
