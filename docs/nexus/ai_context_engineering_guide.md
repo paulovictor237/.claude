@@ -21,7 +21,7 @@ projeto/
 │   ├── knowledge/                   # Doutrina (-> Secao 7: Agent Docs)
 │   │   └── architecture.md          #   Decisoes arquiteturais profundas
 │   ├── specs/                       # Checkpoints Ativos (-> Secao 5: CDD)
-│   │   ├── feature-x.md            #   Spec em andamento
+│   │   ├── feature-x.md             #   Spec em andamento
 │   │   └── archive/                 #   Specs concluidas (memoria)
 │   └── session_ledger.md            # Diario de Bordo (-> Secao 8: Handover)
 │
@@ -49,9 +49,9 @@ Esse mapa e seu indice mental. Quando quiser saber "onde coloco X?", volte aqui.
 
 Agentes de IA sao treinados em milhoes de repositorios publicos. Isso e uma faca de dois gumes:
 
-1. **Perda de contexto**: Em projetos com dezenas de pastas e centenas de arquivos, a IA nao sabe *onde* esta o que importa. Ela le arquivos aleatoriamente, consome tokens desnecessarios e chega a conclusoes parciais.
+1. **Perda de contexto**: Em projetos com dezenas de pastas e centenas de arquivos, a IA nao sabe _onde_ esta o que importa. Ela le arquivos aleatoriamente, consome tokens desnecessarios e chega a conclusoes parciais.
 
-2. **Padroes genericos**: Sem instrucoes explicitas, a IA aplica convencoes da internet — nao as do *seu* projeto. Se voce usa `snake_case` no banco e `camelCase` no TypeScript com `@map`, ela nao vai adivinhar isso.
+2. **Padroes genericos**: Sem instrucoes explicitas, a IA aplica convencoes da internet — nao as do _seu_ projeto. Se voce usa `snake_case` no banco e `camelCase` no TypeScript com `@map`, ela nao vai adivinhar isso.
 
 3. **Deriva de contexto**: Em sessoes longas ou tarefas complexas, a IA gradualmente "esquece" decisoes anteriores. Uma feature que comecou alinhada termina inconsistente.
 
@@ -67,7 +67,7 @@ Nao se trata de escrever prompts melhores. Trata-se de criar um **ecossistema de
 
 Pense no `CLAUDE.md` como o **manual de instrucoes do seu copiloto**. Quando voce entra em um carro novo, o GPS sabe navegar — mas nao sabe que voce prefere evitar pedagios, que a segunda marcha desse carro "engasga" e que o estacionamento do seu predio tem uma manobra especifica. O manual resolve isso.
 
-A IA e o GPS. Seu `CLAUDE.md` e o manual de instrucoes especificas que transforma um navegador generico em um copiloto do *seu* projeto.
+A IA e o GPS. Seu `CLAUDE.md` e o manual de instrucoes especificas que transforma um navegador generico em um copiloto do _seu_ projeto.
 
 ---
 
@@ -77,11 +77,11 @@ A IA e o GPS. Seu `CLAUDE.md` e o manual de instrucoes especificas que transform
 
 Todo `CLAUDE.md` eficaz responde tres perguntas, nesta ordem:
 
-| Secao | Pergunta | Efeito na IA |
-|-------|----------|-------------|
-| **WHY** | *Para que este modulo existe?* | Delimita escopo — evita sugestoes fora do dominio |
-| **WHAT** | *Como esta organizado?* | Da "visao espacial" — a IA localiza arquivos sem varrer o disco |
-| **HOW** | *Quais comandos usar?* | Instrucoes operacionais — a IA executa sem inventar |
+| Secao    | Pergunta                       | Efeito na IA                                                    |
+| -------- | ------------------------------ | --------------------------------------------------------------- |
+| **WHY**  | _Para que este modulo existe?_ | Delimita escopo — evita sugestoes fora do dominio               |
+| **WHAT** | _Como esta organizado?_        | Da "visao espacial" — a IA localiza arquivos sem varrer o disco |
+| **HOW**  | _Quais comandos usar?_         | Instrucoes operacionais — a IA executa sem inventar             |
 
 ### Por que essa ordem funciona
 
@@ -91,32 +91,36 @@ Modelos de linguagem processam texto sequencialmente. O que aparece primeiro inf
 
 ```markdown
 ## WHY - Project Purpose
+
 PX-Nexus is a full-stack monorepo for [domain]. Type-safe communication
 between React frontend and NestJS API via tRPC.
 
 ## WHAT - Architecture
+
 px-nexus/
 ├── apps/
-│   ├── api/          # NestJS + Fastify + tRPC server
-│   └── web/          # React 19 + Vite + TanStack Router
+│ ├── api/ # NestJS + Fastify + tRPC server
+│ └── web/ # React 19 + Vite + TanStack Router
 ├── packages/
-│   ├── db/           # Prisma ORM + PostgreSQL schemas
-│   ├── ui/           # Shared React components (shadcn/ui)
-│   ├── eslint-config/
-│   └── typescript-config/
-└── collections/      # Bruno API collections (versionadas)
+│ ├── db/ # Prisma ORM + PostgreSQL schemas
+│ ├── ui/ # Shared React components (shadcn/ui)
+│ ├── eslint-config/
+│ └── typescript-config/
+└── collections/ # Bruno API collections (versionadas)
 
 **Stack**: pnpm workspaces, Turborepo, TypeScript 5.9, tRPC 11, Prisma 6
 
 ## HOW - Key Commands
-pnpm nexus            # Start postgres + dev server (stops postgres on Ctrl+C)
-docker compose up -d  # Start all services (web:3000, api:3001, db:5433)
-pnpm build            # Build all packages
-pnpm db:generate              # Generate Prisma client
-pnpm db:migrate -- --name X   # Create migration (OBRIGATORIO - nunca use db:push!)
+
+pnpm nexus # Start postgres + dev server (stops postgres on Ctrl+C)
+docker compose up -d # Start all services (web:3000, api:3001, db:5433)
+pnpm build # Build all packages
+pnpm db:generate # Generate Prisma client
+pnpm db:migrate -- --name X # Create migration (OBRIGATORIO - nunca use db:push!)
 ```
 
 Observe:
+
 - **WHY** — Uma frase. Menciona "type-safe communication via tRPC", que ancora toda decisao futura.
 - **WHAT** — Arvore visual com comentarios inline. A IA sabe que `packages/db` contem Prisma sem precisar ler `package.json`.
 - **HOW** — Comandos copiaveis. O comentario `OBRIGATORIO - nunca use db:push!` ja e um guardrail embutido.
@@ -127,27 +131,30 @@ O CLAUDE.md do banco segue o mesmo padrao, mas com profundidade especifica do do
 
 ```markdown
 ## WHY - Purpose
+
 Prisma ORM package providing type-safe database access, schema definitions,
 and migrations for PostgreSQL.
 
 ## WHAT - Architecture
+
 packages/db/
 ├── prisma/
-│   ├── schema/             # Multi-file Prisma schema (one file per model)
-│   │   ├── base.prisma     # generator + datasource
-│   │   ├── user.prisma
-│   │   └── ...
-│   └── migrations/         # Migration history (VERSIONADO)
+│ ├── schema/ # Multi-file Prisma schema (one file per model)
+│ │ ├── base.prisma # generator + datasource
+│ │ ├── user.prisma
+│ │ └── ...
+│ └── migrations/ # Migration history (VERSIONADO)
 ├── src/
-│   ├── index.ts            # Exports prisma client + types
-│   └── client.ts           # Prisma client singleton
-└── seed.ts                 # Database seeding script
+│ ├── index.ts # Exports prisma client + types
+│ └── client.ts # Prisma client singleton
+└── seed.ts # Database seeding script
 
 ## HOW - Key Commands
-pnpm db:generate              # Generate Prisma client (types)
-pnpm db:migrate -- --name X   # Criar migration (OBRIGATORIO)
-pnpm db:migrate:deploy        # Aplicar migrations (producao)
-pnpm db:studio                # Open Prisma Studio GUI
+
+pnpm db:generate # Generate Prisma client (types)
+pnpm db:migrate -- --name X # Criar migration (OBRIGATORIO)
+pnpm db:migrate:deploy # Aplicar migrations (producao)
+pnpm db:studio # Open Prisma Studio GUI
 ```
 
 ### Anti-padrao: O arquivo unico gigante
@@ -176,11 +183,11 @@ Nivel 3: Agent Docs / Knowledge → Doutrina profunda (carregado sob demanda)
 
 ### Quando criar cada nivel
 
-| Nivel | Crie quando... | Exemplos |
-|-------|----------------|----------|
-| **Root** | Projeto iniciado | Stack, comandos, guidelines globais |
-| **App-specific** | Dominio tem regras proprias | API tem padroes de router; Web tem feature-based structure |
-| **Agent Docs** | Conceito nao e dedutivel do codigo | Decisoes arquiteturais, workflows complexos |
+| Nivel            | Crie quando...                     | Exemplos                                                   |
+| ---------------- | ---------------------------------- | ---------------------------------------------------------- |
+| **Root**         | Projeto iniciado                   | Stack, comandos, guidelines globais                        |
+| **App-specific** | Dominio tem regras proprias        | API tem padroes de router; Web tem feature-based structure |
+| **Agent Docs**   | Conceito nao e dedutivel do codigo | Decisoes arquiteturais, workflows complexos                |
 
 ### Exemplo real: PX-Nexus tem 5 CLAUDE.md + 2 agent_docs
 
@@ -205,6 +212,7 @@ px-nexus/
 ### Como isso economiza tokens
 
 Quando a IA trabalha em `apps/web/`, ela carrega automaticamente:
+
 1. O Root CLAUDE.md (Nivel 1) — sabe que e um monorepo com tRPC
 2. O `apps/web/CLAUDE.md` (Nivel 2) — sabe que usa feature-based structure
 3. Os agent_docs (Nivel 3) — se precisar, sabe como funciona o roteamento
@@ -233,12 +241,12 @@ Modelos de linguagem sao otimistas por padrao. Eles buscam a solucao mais comum,
 
 Guardrails precisam de **destaque visual** para serem eficazes. A IA atribui mais peso a texto formatado:
 
-| Tecnica | Exemplo | Efeito |
-|---------|---------|--------|
-| **Negrito** | **NUNCA use db:push** | Peso semantico elevado |
-| **MAIUSCULO** | OBRIGATORIO, PROIBIDO | Interpretado como instrucao forte |
-| **Bilinguismo** | Texto em PT-BR entre texto EN | Contraste que chama atencao (ver Secao 6) |
-| **Prefixo de proibicao** | `NUNCA`, `PROIBIDO`, `NAO` | Aciona comportamento de restricao |
+| Tecnica                  | Exemplo                       | Efeito                                    |
+| ------------------------ | ----------------------------- | ----------------------------------------- |
+| **Negrito**              | **NUNCA use db:push**         | Peso semantico elevado                    |
+| **MAIUSCULO**            | OBRIGATORIO, PROIBIDO         | Interpretado como instrucao forte         |
+| **Bilinguismo**          | Texto em PT-BR entre texto EN | Contraste que chama atencao (ver Secao 6) |
+| **Prefixo de proibicao** | `NUNCA`, `PROIBIDO`, `NAO`    | Aciona comportamento de restricao         |
 
 ### Exemplo real: "NUNCA use db:push"
 
@@ -254,6 +262,7 @@ Do `packages/db/CLAUDE.md`:
 pnpm db:migrate -- --name add_user_phone_field
 
 **Por que migrations?**
+
 - Historico versionado de alteracoes
 - Reproduzivel em qualquer ambiente
 - Rollback possivel
@@ -261,20 +270,22 @@ pnpm db:migrate -- --name add_user_phone_field
 - Obrigatorio para producao
 ```
 
-Observe a estrutura: **proibicao explicita** → **alternativa obrigatoria** → **justificativa**. A IA nao so sabe o que nao fazer — sabe o que fazer no lugar e *por que*.
+Observe a estrutura: **proibicao explicita** → **alternativa obrigatoria** → **justificativa**. A IA nao so sabe o que nao fazer — sabe o que fazer no lugar e _por que_.
 
 ### Exemplo real: "NUNCA use enum no Prisma"
 
 ```markdown
 ## Critical Notes
+
 - **NUNCA use `enum` no Prisma schema** - enums ficam apenas em codigo
   (Zod em `schemas.ts`). No banco, usar `String` + validacao na aplicacao
 ```
 
 Este guardrail e poderoso porque:
+
 1. Proibe o caminho "facil" (enum nativo do Prisma)
 2. Indica a alternativa (Zod + String)
-3. Indica *onde* (no arquivo `schemas.ts`)
+3. Indica _onde_ (no arquivo `schemas.ts`)
 
 ### Como calibrar: especifico > generico
 
@@ -282,14 +293,16 @@ Guardrails genericos sao ignorados. Compare:
 
 ```markdown
 # Ruim (generico demais)
+
 - Siga boas praticas de banco de dados
 
 # Bom (especifico e acionavel)
+
 - **NUNCA use `db:push`** — sempre crie migrations
 - **NUNCA use `enum` no Prisma** — use Zod em schemas.ts + String no banco
 - Tabelas: plural, snake_case (users, role_permissions)
-- Foreign keys: <tabela_singular>_id (role_id, user_id)
-- Booleans: prefixo is_ (is_active, is_published)
+- Foreign keys: <tabela_singular>\_id (role_id, user_id)
+- Booleans: prefixo is\_ (is_active, is_published)
 ```
 
 ### Exercicio pratico
@@ -308,10 +321,10 @@ O CDD usa especificacoes como "checkpoints de verdade tecnica" — documentos qu
 
 ### O conceito fundamental
 
-| Artefato | O que diz |
-|----------|-----------|
-| **Codigo** | O que o sistema *faz* |
-| **Spec** | O que o sistema *deveria fazer* |
+| Artefato   | O que diz                       |
+| ---------- | ------------------------------- |
+| **Codigo** | O que o sistema _faz_           |
+| **Spec**   | O que o sistema _deveria fazer_ |
 
 Essa separacao e crucial. O codigo evolui, bugs aparecem, refactorings mudam a estrutura — mas a spec preserva a **intencao original**. Quando a IA consulta a spec, ela consegue distinguir "isso e um bug" de "isso e comportamento intencional".
 
@@ -332,16 +345,16 @@ Criacao  →  Alinhamento  →  Implementacao  →  Arquivo
 .claude/specs/feature-x.md  →  .claude/specs/archive/feature-x.md
 ```
 
-Specs concluidas nao sao deletadas — sao **arquivadas** em `.claude/specs/archive/`. Elas servem como memoria historica: em futuros refactorings, a IA pode consultar o arquivo para entender *por que* algo foi construido daquela forma.
+Specs concluidas nao sao deletadas — sao **arquivadas** em `.claude/specs/archive/`. Elas servem como memoria historica: em futuros refactorings, a IA pode consultar o arquivo para entender _por que_ algo foi construido daquela forma.
 
 ### Quando usar CDD vs. quando e overkill
 
-| Use CDD quando... | Nao use CDD quando... |
-|--------------------|-----------------------|
-| Feature toca 3+ arquivos | Fix de 1-2 linhas |
-| Regras de negocio complexas | Refactor mecanico (rename, move) |
-| Multiplas decisoes de design | Tarefa com escopo 100% claro |
-| Sessao vai durar muito | Tarefa completa em < 10 minutos |
+| Use CDD quando...            | Nao use CDD quando...            |
+| ---------------------------- | -------------------------------- |
+| Feature toca 3+ arquivos     | Fix de 1-2 linhas                |
+| Regras de negocio complexas  | Refactor mecanico (rename, move) |
+| Multiplas decisoes de design | Tarefa com escopo 100% claro     |
+| Sessao vai durar muito       | Tarefa completa em < 10 minutos  |
 
 ### Anatomia de uma boa spec
 
@@ -349,19 +362,23 @@ Specs concluidas nao sao deletadas — sao **arquivadas** em `.claude/specs/arch
 # Feature: [Nome]
 
 ## Objetivo
+
 [1-2 frases sobre o que a feature faz e por que existe]
 
 ## Regras de Negocio
+
 - [Regra 1]
 - [Regra 2]
 - [Restricao importante]
 
 ## Impacto
+
 - Arquivos afetados: [lista]
 - Migrations necessarias: [sim/nao]
 - Riscos: [o que pode quebrar]
 
 ## Criterios de Aceite
+
 - [ ] [Criterio 1]
 - [ ] [Criterio 2]
 - [ ] [Criterio 3]
@@ -384,34 +401,38 @@ Modelos de linguagem sao treinados predominantemente em ingles. Isso significa q
 
 ### Como aplicar
 
-| Tipo de conteudo | Idioma | Por que |
-|-----------------|--------|---------|
-| Nomes de secao, estrutura | Ingles | Universal, a IA navega naturalmente |
-| Stack, comandos, code patterns | Ingles | Termos tecnicos perdem precisao traduzidos |
-| Guardrails e proibicoes | Portugues | Contraste = peso. "NUNCA use db:push" e mais forte que "Never use db:push" |
-| Justificativas de regras | Portugues | Explica o "por que" no idioma da equipe |
-| Comentarios em codigo | Nenhum | Self-documenting code (sem comentarios) |
+| Tipo de conteudo               | Idioma    | Por que                                                                    |
+| ------------------------------ | --------- | -------------------------------------------------------------------------- |
+| Nomes de secao, estrutura      | Ingles    | Universal, a IA navega naturalmente                                        |
+| Stack, comandos, code patterns | Ingles    | Termos tecnicos perdem precisao traduzidos                                 |
+| Guardrails e proibicoes        | Portugues | Contraste = peso. "NUNCA use db:push" e mais forte que "Never use db:push" |
+| Justificativas de regras       | Portugues | Explica o "por que" no idioma da equipe                                    |
+| Comentarios em codigo          | Nenhum    | Self-documenting code (sem comentarios)                                    |
 
 ### Exemplo real: CLAUDE.md raiz do PX-Nexus
 
 ```markdown
-## HOW - Key Commands                           ← Ingles (secao universal)
-pnpm db:migrate -- --name X   # Create migration (OBRIGATORIO - nunca use db:push!)
-                                                 ↑ Ingles (tecnico)      ↑ Portugues (guardrail)
+## HOW - Key Commands ← Ingles (secao universal)
 
-## Critical Notes                               ← Ingles (secao universal)
+pnpm db:migrate -- --name X # Create migration (OBRIGATORIO - nunca use db:push!)
+↑ Ingles (tecnico) ↑ Portugues (guardrail)
+
+## Critical Notes ← Ingles (secao universal)
+
 - Bruno collections em collections/nexus-api/ - ver collections/CLAUDE.md
-                      ↑ Portugues (instrucao contextual)
+  ↑ Portugues (instrucao contextual)
 ```
 
 ### Exemplo real: packages/db/CLAUDE.md
 
 ```markdown
-## REGRA CRITICA: SEMPRE USAR MIGRATIONS        ← Portugues (titulo de guardrail)
-**PROIBIDO:** `db:push`                          ← Portugues (proibicao)
-**OBRIGATORIO:** Toda alteracao DEVE ser via migration  ← Portugues (obrigacao)
+## REGRA CRITICA: SEMPRE USAR MIGRATIONS ← Portugues (titulo de guardrail)
 
-**Por que migrations?**                          ← Portugues (justificativa)
+**PROIBIDO:** `db:push` ← Portugues (proibicao)
+**OBRIGATORIO:** Toda alteracao DEVE ser via migration ← Portugues (obrigacao)
+
+**Por que migrations?** ← Portugues (justificativa)
+
 - Historico versionado de alteracoes
 - Reproduzivel em qualquer ambiente
 ```
@@ -430,11 +451,11 @@ Se sua equipe trabalha em ingles, o bilinguismo nao se aplica diretamente. Mas o
 
 O CLAUDE.md e otimo para regras, comandos e estrutura. Mas alguns conceitos **nao podem ser deduzidos do codigo** nem expressos em regras simples:
 
-- *Por que* a arquitetura foi desenhada assim?
-- *Como* as pecas se conectam (fluxo de dados, hierarquia de componentes)?
-- *Qual* o step-by-step para criar uma feature completa?
+- _Por que_ a arquitetura foi desenhada assim?
+- _Como_ as pecas se conectam (fluxo de dados, hierarquia de componentes)?
+- _Qual_ o step-by-step para criar uma feature completa?
 
-Esses conhecimentos abstratos vivem nos **Agent Docs** — documentos de doutrina que ensinam a IA *como pensar* sobre o projeto, nao apenas *o que fazer*.
+Esses conhecimentos abstratos vivem nos **Agent Docs** — documentos de doutrina que ensinam a IA _como pensar_ sobre o projeto, nao apenas _o que fazer_.
 
 ### Onde colocar
 
@@ -462,19 +483,19 @@ O `apps/web/agent_docs/architecture.md` do PX-Nexus explica como funciona a feat
 // CORRECT - Route only imports from feature
 import { SessionPage } from "@features/attend/pages/session";
 
-export const Route = createFileRoute("/_authenticated/attend/$sessionId")({
-  component: RouteComponent,
+export const Route = createFileRoute("/\_authenticated/attend/$sessionId")({
+component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { sessionId } = Route.useParams();
-  return <SessionPage sessionId={sessionId} />;
+const { sessionId } = Route.useParams();
+return <SessionPage sessionId={sessionId} />;
 }
 
 ### Use FOLDERS for nested routes (not dots)
 
-routes/_authenticated/monitoring/agents.tsx         # YES
-routes/_authenticated/monitoring.agents.tsx          # NO
+routes/\_authenticated/monitoring/agents.tsx # YES
+routes/\_authenticated/monitoring.agents.tsx # NO
 ```
 
 Sem este documento, a IA criaria rotas com logica de negocio inline (o padrao generico da internet). Com ele, a IA entende que **rotas sao conectores** e toda logica vive em `features/`.
@@ -488,14 +509,14 @@ O `apps/web/agent_docs/development.md` funciona como um runbook:
 
 1. Create folder under src/features/[name]/
 2. Add components/, pages/ (and optionally contexts/, hooks/)
-3. Create route file(s) under src/routes/_authenticated/[name]/
+3. Create route file(s) under src/routes/\_authenticated/[name]/
 4. Route file imports page from feature — no business logic in route
 
 ## Adding a New Route
 
-- Use FOLDERS for nesting: routes/_authenticated/monitoring/queues/$queueId.tsx
-- For layouts: create routes/_authenticated/[name].tsx with <Outlet />
-- For index pages: routes/_authenticated/[name]/index.tsx
+- Use FOLDERS for nesting: routes/\_authenticated/monitoring/queues/$queueId.tsx
+- For layouts: create routes/\_authenticated/[name].tsx with <Outlet />
+- For index pages: routes/\_authenticated/[name]/index.tsx
 - routeTree.gen.ts is auto-generated — NEVER edit manually
 ```
 
@@ -509,6 +530,7 @@ Pergunte-se: **"Se eu nao explicar isso, a IA vai adivinhar certo?"**
 - Se nao → crie um Agent Doc
 
 Exemplos de temas que geralmente precisam de doutrina:
+
 - Decisoes arquiteturais (por que monorepo? por que tRPC ao inves de REST?)
 - Fluxos de dados (como o estado percorre a aplicacao)
 - Convencoes nao-obvias (feature-based structure, separation of routes and logic)
@@ -532,16 +554,19 @@ O `session_ledger.md` e um documento vivo que registra o estado da tarefa entre 
 ## Ultima atualizacao: 2025-01-15
 
 ### O que foi feito
+
 - Criado schema de audit_logs em packages/db
 - Migration gerada: create_audit_logs_table
 - Router tRPC criado em src/trpc/routers/audit-log.ts
 
 ### O que falta
+
 - [ ] Criar pagina de visualizacao em apps/web
 - [ ] Adicionar filtros por data e usuario
 - [ ] Testes de integracao
 
 ### Decisoes tecnicas
+
 - Optamos por soft delete (is_deleted) ao inves de exclusao fisica
 - Indices criados em created_at e user_id para queries frequentes
 - Nao usamos enum para action_type — String + Zod validation
@@ -560,6 +585,7 @@ O SYNC ALERT e um mecanismo para manter documentacao sincronizada com o codigo. 
 > **Se alterou codigo, verifique se a documentacao precisa de atualizacao.**
 
 Documentos que devem ser verificados apos mudancas:
+
 - `.claude/knowledge/` — guias de arquitetura
 - `.claude/specs/` — specs ativas
 - `CLAUDE.md` (raiz ou local) — comandos e estrutura
@@ -571,7 +597,9 @@ Na pratica, voce instrui a IA a executar esse check automaticamente:
 ### Ao finalizar (Obrigatorio):
 
 #### SYNC ALERT
+
 Se alterou codigo, verifique se a documentacao precisa de atualizacao:
+
 - .claude/knowledge/ — guias de arquitetura
 - .claude/specs/ — specs ativas
 - CLAUDE.md (raiz ou local) — comandos e estrutura
@@ -594,20 +622,25 @@ Crie o `CLAUDE.md` na raiz do projeto com:
 
 ```markdown
 ## WHY - Project Purpose
+
 [1-2 frases sobre o que o projeto faz]
 
 ## WHAT - Architecture
+
 [Arvore de pastas principal — top 2 niveis]
 
 **Stack**: [tecnologias principais]
 
 ## HOW - Key Commands
+
 [Comandos de dev, build, test, database]
 
 ## Coding Guidelines
+
 [3-5 regras de estilo do projeto]
 
 ## Critical Notes
+
 [Guardrails — o que NUNCA fazer]
 ```
 
@@ -616,6 +649,7 @@ Crie o `CLAUDE.md` na raiz do projeto com:
 #### Passo 2: App-specific CLAUDE.md (10 minutos cada)
 
 Para cada app ou pacote significativo, crie um CLAUDE.md local com:
+
 - WHY do modulo especifico
 - WHAT com arvore interna
 - HOW com comandos locais
@@ -680,6 +714,7 @@ Nao edite nada neste passo. Apenas observe e valide o mapeamento.
 #### Passo 2 — Esqueleto do CLAUDE.md
 
 Com base no reconhecimento, gere o CLAUDE.md raiz:
+
 - **WHY**: Inferido do README ou package.json description
 - **WHAT**: Arvore de pastas real
 - **HOW**: Comandos reais encontrados
@@ -688,6 +723,7 @@ Com base no reconhecimento, gere o CLAUDE.md raiz:
 #### Passo 3 — Modularizacao
 
 Para cada app/pacote significativo:
+
 1. Crie CLAUDE.md local com arquitetura interna
 2. Identifique guardrails criticos (configs de banco, deploy, etc)
 3. Documente workflows especificos (ex: como criar uma migration)
@@ -695,6 +731,7 @@ Para cada app/pacote significativo:
 #### Passo 4 — Specs retroativas
 
 Para features complexas ja implementadas:
+
 1. Identifique as principais regras de negocio no codigo
 2. Gere specs retroativas em `.claude/specs/` para preservar a intencao original
 3. Estas specs protegem contra refactorings que quebrem regras
@@ -702,6 +739,7 @@ Para features complexas ja implementadas:
 #### Passo 5 — Validacao
 
 Teste o contexto gerado:
+
 1. Pergunte a IA **"O que este projeto faz?"** — deve responder com precisao
 2. Peca uma tarefa simples — deve seguir os padroes sem instrucao extra
 3. Ajuste os CLAUDE.md conforme necessario
@@ -765,14 +803,14 @@ A IA opera quase autonomamente no projeto:
 
 ## Recapitulacao
 
-| # | Estrategia | Problema que resolve | Ferramenta |
-|---|-----------|---------------------|------------|
-| 1 | Context Layering | Desperdicio de tokens, confusao de escopo | CLAUDE.md distribuidos |
-| 2 | Guardrails | IA segue caminho "facil" ao inves do correto | Instrucoes negativas |
-| 3 | CDD | Deriva de contexto em tarefas longas | Specs como checkpoints |
-| 4 | Bilinguismo | Regras criticas passam despercebidas | Contraste EN/PT-BR |
-| 5 | Agent Docs | Conhecimento abstrato nao dedutivel do codigo | Documentos de doutrina |
-| 6 | Session Handover | Perda de raciocinio entre sessoes | Ledger + SYNC ALERT |
+| #   | Estrategia       | Problema que resolve                          | Ferramenta             |
+| --- | ---------------- | --------------------------------------------- | ---------------------- |
+| 1   | Context Layering | Desperdicio de tokens, confusao de escopo     | CLAUDE.md distribuidos |
+| 2   | Guardrails       | IA segue caminho "facil" ao inves do correto  | Instrucoes negativas   |
+| 3   | CDD              | Deriva de contexto em tarefas longas          | Specs como checkpoints |
+| 4   | Bilinguismo      | Regras criticas passam despercebidas          | Contraste EN/PT-BR     |
+| 5   | Agent Docs       | Conhecimento abstrato nao dedutivel do codigo | Documentos de doutrina |
+| 6   | Session Handover | Perda de raciocinio entre sessoes             | Ledger + SYNC ALERT    |
 
 ### A mensagem final
 
