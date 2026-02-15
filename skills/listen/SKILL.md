@@ -1,13 +1,15 @@
 ---
 name: listen
-description: Lê a última interação em voz alta usando edge-tts (vozes neurais). Use quando o usuário pedir para ouvir, reproduzir, escutar ou ler em voz alta a última resposta ou interação. Também acione quando o usuário mencionar termos como "listen", "ouça", "fale", "leia em voz alta", "text-to-speech", "TTS", ou qualquer variação relacionada a áudio da resposta.
+description: Lê a última interação em voz alta usando edge-tts (vozes neurais), ou lê um arquivo específico se passado como parâmetro. Use quando o usuário pedir para ouvir, reproduzir, escutar ou ler em voz alta a última resposta, um arquivo, ou qualquer menção a "listen", "ouça", "fale", "leia em voz alta", "text-to-speech", "TTS", ou variação relacionada a áudio.
 ---
 
 # Listen
 
-Lê a última resposta da conversa em voz alta usando edge-tts (text-to-speech neural) e reproduz o áudio automaticamente.
+Lê a última resposta da conversa em voz alta usando edge-tts (text-to-speech neural) e reproduz o áudio automaticamente, ou lê um arquivo específico se passado como parâmetro.
 
 ## Como usar
+
+### Sem parâmetros (lê última resposta)
 
 1. **Identifique sua resposta anterior** nesta conversa (não inclua mensagens do usuário).
 
@@ -43,6 +45,27 @@ Lê a última resposta da conversa em voz alta usando edge-tts (text-to-speech n
 
    edge-tts --voice "pt-BR-FranciscaNeural" --file /tmp/listen_input.txt --write-media /tmp/listen_output.mp3 && afplay /tmp/listen_output.mp3
    ```
+
+### Com parâmetro de arquivo (lê um arquivo específico)
+
+Use a skill passando o caminho do arquivo como parâmetro:
+
+```bash
+/listen /caminho/para/arquivo.txt
+```
+
+Exemplos:
+```bash
+/listen README.md
+/listen /Users/paulovictor237/.claude/skills/listen/SKILL.md
+/listen ~/documentos/texto.txt
+```
+
+A skill irá:
+1. Ler o conteúdo do arquivo
+2. Remover emojis e caracteres especiais problemáticos
+3. Gerar e reproduzir o áudio usando edge-tts
+4. Reproduzir automaticamente com afplay
 
 ## Notas importantes
 
