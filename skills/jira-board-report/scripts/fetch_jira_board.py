@@ -120,7 +120,11 @@ def get_assignee_name(issue: Dict[str, Any]) -> str:
     display_name = assignee.get("displayName", "")
     return TEAM_MAPPING.get(display_name, display_name)
 
-def generate_report():
+import argparse
+
+# ... (TEAM_MEMBERS and TEAM_MAPPING remain same)
+
+def generate_report(include_in_progress=False):
     issues = get_issues()
     
     # Group issues by status
@@ -129,39 +133,51 @@ def generate_report():
         status_name = issue.get("fields", {}).get("status", {}).get("name")
         if status_name in by_status:
             by_status[status_name].append(issue)
+        elif status_name == "In Progress": # Match JQL fallback
+            by_status["Em andamento"].append(issue)
+    
+    report_lines = []
     
     for col in COLUMNS:
         status_name = col["status"]
         label = col["label"]
+        
+        # Skip IN PROGRESS if not requested
+        if label == "IN PROGRESS" and not include_in_progress:
+            continue
+            
         issues_in_col = by_status[status_name]
         
         if not issues_in_col:
             continue
             
-        print(f"## **[{label}]**\n")
+        report_lines.append(f"*{label}*\n")
         
         for i, issue in enumerate(issues_in_col, 1):
             key = issue.get("key")
-            summary = issue.get("fields", {}).get("summary")
+            summary = issue.get("fields", {}).get("summary") or "Sem título"
             assignee = get_assignee_name(issue)
             
-            # Dates
-            # Since we can't get changelog, we use statuscategorychangedate for "Desde"
-            # and "created" for "Início" (as a proxy for when it started)
             status_changed = issue.get("fields", {}).get("statuscategorychangedate")
             created = issue.get("fields", {}).get("created")
             
             days_in_col = calculate_days(status_changed)
             since_date = format_date(status_changed)
             
-            days_in_progress = calculate_days(created) # Fallback to created
+            days_in_progress = calculate_days(created)
             start_date = format_date(created)
             
-            print(f"**{summary} ({key})**\n")
-            print(f"* **Link:** `https://motoristapx.atlassian.net/browse/{key}`")
-            print(f"* **Responsável:** {assignee}")
-            print(f"* **Dias em andamento:** **{days_in_progress} dias** (Início: {start_date})")
-            print(f"* **Dias parado na coluna atual:** **{days_in_col} dias** (Desde: {since_date})\n")
+            report_lines.append(f"*{summary} ({key})*")
+            report_lines.append(f"• *Link:* https://motoristapx.atlassian.net/browse/{key}")
+            report_lines.append(f"• *Responsável:* {assignee}")
+            report_lines.append(f"• *Dias em andamento:* *{days_in_progress} dias* (Início: {start_date})")
+            report_lines.append(f"• *Dias parado na coluna atual:* *{days_in_col} dias* (Desde: {since_date})\n")
+
+    print("\n".join(report_lines))
 
 if __name__ == "__main__":
-    generate_report()
+    parser = argparse.ArgumentParser(description="Gera relatório do Jira para Slack.")
+    parser.add_argument("--in-progress", action="store_true", help="Inclui tarefas em andamento")
+    args = parser.parse_args()
+    
+    generate_report(include_in_progress=args.in_progress)
