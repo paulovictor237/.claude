@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engenharia de Contexto para IA - Workshop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        [x-cloak] { display: none !important; }
+        .slide-enter { transition: all 0.3s ease-out; }
+        .slide-enter-start { opacity: 0; transform: translateX(20px); }
+        .slide-exit { transition: all 0.2s ease-in; }
+        .slide-exit-end { opacity: 0; transform: translateX(-20px); }
+        pre { background: #1a1b26; border-radius: 0.5rem; padding: 1rem; overflow-x: auto; }
+        code { color: #9ece6a; font-family: 'Fira Code', monospace; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased" x-data="presentation()">
+
+    <div class="fixed top-0 left-0 w-full h-1 bg-slate-800 z-50">
+        <div class="h-full bg-blue-500 transition-all duration-300" :style="`width: ${(currentSlide / (totalSlides - 1)) * 100}%`"></p>
+    </div>
+
+    <nav class="fixed bottom-6 right-6 flex space-x-4 z-50">
+        <button @click="prev()" class="bg-slate-800 hover:bg-slate-700 p-3 rounded-full border border-slate-600 transition shadow-lg" :disabled="currentSlide === 0">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="bg-slate-800 px-4 py-3 rounded-full border border-slate-600 text-sm font-mono flex items-center shadow-lg">
+            <span x-text="currentSlide + 1"></span> / <span x-text="totalSlides"></span>
+        </div>
+        <button @click="next()" class="bg-blue-600 hover:bg-blue-500 p-3 rounded-full transition shadow-lg" :disabled="currentSlide === totalSlides - 1">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </nav>
+
+    <main class="min-h-screen flex items-center justify-center p-4 md:p-12">
+        
+        <template x-if="currentSlide === 0">
+            <div class="max-w-4xl text-center space-y-6 slide-enter" x-transition>
+                <div class="inline-block px-4 py-1 bg-blue-900/50 text-blue-400 rounded-full text-sm font-semibold mb-4 border border-blue-500/30">
+                    Guia PX-Nexus
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight">Engenharia de <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Contexto</span></h1>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto italic">
+                    "Transformando um GPS genérico em um copiloto especialista no seu projeto."
+                </p>
+                <div class="flex justify-center gap-8 pt-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-400">6</div>
+                        <div class="text-xs uppercase tracking-widest text-slate-500">Estratégias</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-emerald-400">∞</div>
+                        <div class="text-xs uppercase tracking-widest text-slate-500">Escalabilidade</div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template x-if="currentSlide === 1">
+            <div class="max-w-5xl w-full grid md:grid-cols-2 gap-12 items-center slide-enter" x-transition>
+                <div>
+                    <h2 class="text-3xl font-bold mb-6 italic text-blue-400">Por que as IAs erram em projetos grandes?</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times-circle text-red-500 mt-1"></i>
+                            <span><strong>Perda de Contexto:</strong> Consumo aleatório de tokens em repositórios vastos.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times-circle text-red-500 mt-1"></i>
+                            <span><strong>Padrões Genéricos:</strong> Aplicação de regras da web, não as suas.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times-circle text-red-500 mt-1"></i>
+                            <span><strong>Deriva:</strong> Esquecimento gradual de decisões tomadas no início da sessão.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-2xl">
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2 italic">
+                        <i class="fas fa-lightbulb text-yellow-400"></i> A Solução
+                    </h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Não se trata de prompts bonitos. Trata-se de construir um <strong>ecossistema de documentação</strong> que funciona como a memória externa da IA.
+                    </p>
+                </div>
+            </div>
+        </template>
+
+        <template x-if="currentSlide === 2">
+            <div class="max-w-5xl w-full slide-enter" x-transition>
+                <h2 class="text-3xl font-bold mb-8 text-center italic">O Padrão <span class="text-blue-400 underline">WHY-WHAT-HOW</span></h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-slate-800 p-6 rounded-xl border-t-4 border-blue-500">
+                        <div class="text-sm text-blue-400 font-mono mb-2 italic">WHY</div>
+                        <h4 class="text-xl font-bold mb-3">Propósito</h4>
+                        <p class="text-sm text-slate-400">Evita sugestões fora do domínio. Ancoragem do raciocínio.</p>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl border-t-4 border-emerald-500">
+                        <div class="text-sm text-emerald-400 font-mono mb-2 italic">WHAT</div>
+                        <h4 class="text-xl font-bold mb-3">Arquitetura</h4>
+                        <p class="text-sm text-slate-400">Visão espacial. Localiza arquivos sem varrer o disco.</p>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl border-t-4 border-purple-500">
+                        <div class="text-sm text-purple-400 font-mono mb-2 italic">HOW</div>
+                        <h4 class="text-xl font-bold mb-3">Execução</h4>
+                        <p class="text-sm text-slate-400">Comandos operacionais reais para evitar alucinações.</p>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <pre><code>## HOW - Key Commands
+pnpm db:migrate -- --name X # OBRIGATÓRIO: Nunca use db:push!</code></pre>
+                </div>
+            </div>
+        </template>
+
+        <template x-if="currentSlide === 3">
+            <div class="max-w-5xl w-full slide-enter" x-transition>
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold mb-2 italic">Estratégia 1: Documentação em Camadas</h2>
+                    <p class="text-slate-400">Economize tokens e aumente a precisão modularizando o conhecimento.</p>
+                </div>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                    <div class="w-full md:w-64 p-4 bg-slate-800 border border-slate-700 rounded-lg text-center">
+                        <span class="text-xs font-bold text-slate-500 italic uppercase">Nível 1</span>
+                        <div class="font-bold text-blue-400 italic">Root CLAUDE.md</div>
+                    </div>
+                    <i class="fas fa-arrow-down md:rotate-[-90deg] text-slate-600"></i>
+                    <div class="w-full md:w-64 p-4 bg-slate-800 border border-slate-700 rounded-lg text-center border-l-4 border-l-emerald-500">
+                        <span class="text-xs font-bold text-slate-500 italic uppercase">Nível 2</span>
+                        <div class="font-bold text-emerald-400 italic">App-specific CLAUDE.md</div>
+                    </div>
+                    <i class="fas fa-arrow-down md:rotate-[-90deg] text-slate-600"></i>
+                    <div class="w-full md:w-64 p-4 bg-slate-800 border border-slate-700 rounded-lg text-center border-l-4 border-l-purple-500">
+                        <span class="text-xs font-bold text-slate-500 italic uppercase">Nível 3</span>
+                        <div class="font-bold text-purple-400 italic">Agent Docs / Knowledge</div>
+                    </div>
+                </div>
+                <p class="mt-10 text-center text-sm text-slate-500 italic">
+                    "A IA só lê o contexto do banco de dados quando está trabalhando na pasta do banco."
+                </p>
+            </div>
+        </template>
+
+        <template x-if="currentSlide === 4">
+            <div class="max-w-5xl w-full grid md:grid-cols-2 gap-12 slide-enter" x-transition>
+                <div>
+                    <h2 class="text-3xl font-bold mb-6 italic text-red-400">Estratégia 2 & 4: Guardrails & Bilinguismo</h2>
+                    <p class="text-slate-400 mb-6">Use o contraste de idiomas para destacar regras críticas que a IA nunca deve ignorar.</p>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                            <h4 class="font-bold text-red-400 mb-2 italic uppercase">A Regra do Contraste</h4>
+                            <p class="text-sm">Técnica em <strong>Inglês</strong> + Regras em <strong>Português</strong> = Maior atenção do modelo.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <pre><code>## Critical Notes
+- **NUNCA use `enum` no Prisma** - No banco, use `String` 
+- Validação no `Zod` (schemas.ts)
+- JUSTIFICATIVA: Enums nativos 
+  dificultam migrations dinâmicas.</code></pre>
+                    <div class="grid grid-cols-2 gap-2 text-center text-xs">
+                        <div class="p-2 bg-slate-800 rounded italic">MAIÚSCULAS</div>
+                        <div class="p-2 bg-slate-800 rounded italic">Negrito</div>
+                        <div class="p-2 bg-slate-800 rounded italic">Prefixo de proibição</div>
+                        <div class="p-2 bg-slate-800 rounded italic">Explicação Curta</div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template x-if="currentSlide === 5">
+            <div class="max-w-5xl w-full slide-enter" x-transition>
+                <h2 class="text-3xl font-bold mb-8 text-center italic text-emerald-400">Checkpoint-Driven Development (CDD)</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div class="flex gap-4">
+                            <div class="bg-blue-600 h-8 w-8 rounded-full flex items-center justify-center shrink-0">1</div>
+                            <div>
+                                <h4 class="font-bold italic underline">Spec-First</h4>
+                                <p class="text-sm text-slate-400">Defina o contrato antes de codar. A Spec é a intenção; o código é a implementação.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="bg-blue-600 h-8 w-8 rounded-full flex items-center justify-center shrink-0">2</div>
+                            <div>
+                                <h4 class="font-bold italic underline">Session Ledger</h4>
+                                <p class="text-sm text-slate-400">Diário de bordo para tarefas longas. Evita que a IA "esqueça" o que já foi feito ao reiniciar a sessão.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-lg border border-slate-700">
+                        <h4 class="text-sm font-mono text-slate-500 mb-2 italic"># .claude/session_ledger.md</h4>
+                        <ul class="text-xs space-y-2 font-mono">
+                            <li class="text-emerald-400">[x] Criado schema audit_logs</li>
+                            <li class="text-emerald-400">[x] Migration gerada</li>
+                            <li class="text-yellow-400">[ ] Criar página de visualização</li>
+                            <li class="text-slate-500 border-t border-slate-700 pt-2 mt-2 italic">Decisão: Usamos soft-delete por auditoria.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template x-if="currentSlide === 6">
+            <div class="max-w-4xl w-full slide-enter" x-transition>
+                <h2 class="text-3xl font-bold mb-8 italic flex items-center gap-3">
+                    <i class="fas fa-tasks text-blue-400"></i> Checklist de Maturidade
+                </h2>
+                <div class="space-y-3">
+                    <div class="p-4 bg-slate-800/50 border border-slate-700 rounded-xl flex items-center gap-4 hover:bg-slate-800 transition">
+                        <input type="checkbox" class="h-5 w-5 rounded bg-slate-900 border-slate-600 text-blue-500">
+                        <div>
+                            <span class="font-bold italic">Nível 1: Fundação</span>
+                            <p class="text-xs text-slate-500 italic">Root CLAUDE.md (WHY/WHAT/HOW) + Guardrails Críticos.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-slate-800/50 border border-slate-700 rounded-xl flex items-center gap-4 hover:bg-slate-800 transition">
+                        <input type="checkbox" class="h-5 w-5 rounded bg-slate-900 border-slate-600 text-blue-500">
+                        <div>
+                            <span class="font-bold italic">Nível 2: Modularidade</span>
+                            <p class="text-xs text-slate-500 italic">CLAUDE.md local em cada app/pacote significativo.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-slate-800/50 border border-slate-700 rounded-xl flex items-center gap-4 hover:bg-slate-800 transition">
+                        <input type="checkbox" class="h-5 w-5 rounded bg-slate-900 border-slate-600 text-blue-500">
+                        <div>
+                            <span class="font-bold italic">Nível 3: Memória</span>
+                            <p class="text-xs text-slate-500 italic">Specs, Knowledge base e Session Ledger ativos.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-slate-800/50 border border-slate-700 rounded-xl flex items-center gap-4 hover:bg-slate-800 transition">
+                        <input type="checkbox" class="h-5 w-5 rounded bg-slate-900 border-slate-600 text-blue-500">
+                        <div>
+                            <span class="font-bold italic">Nível 4: Doutrina</span>
+                            <p class="text-xs text-slate-500 italic">IA opera quase autonomamente com Agent Docs profundos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template x-if="currentSlide === 7">
+            <div class="max-w-2xl text-center space-y-8 slide-enter" x-transition>
+                <h2 class="text-4xl font-bold italic">Pronto para começar?</h2>
+                <p class="text-slate-400 leading-relaxed">
+                    Engenharia de Contexto não é sobre documentar tudo. É sobre documentar <strong>o que a IA não consegue inferir sozinha</strong>.
+                </p>
+                <div class="bg-blue-600/10 border border-blue-500/50 p-6 rounded-2xl italic">
+                    "Seu objetivo não é a perfeição, é reduzir progressivamente a distância entre o que a IA faz e o que você espera."
+                </div>
+                <button @click="currentSlide = 0" class="px-8 py-3 bg-slate-100 text-slate-900 rounded-full font-bold hover:bg-white transition uppercase tracking-tighter">
+                    Reiniciar Jornada
+                </button>
+            </div>
+        </template>
+
+    </main>
+
+    <script>
+        function presentation() {
+            return {
+                currentSlide: 0,
+                totalSlides: 8,
+                next() {
+                    if (this.currentSlide < this.totalSlides - 1) this.currentSlide++;
+                },
+                prev() {
+                    if (this.currentSlide > 0) this.currentSlide--;
+                },
+                // Atalhos de teclado
+                init() {
+                    window.addEventListener('keydown', (e) => {
+                        if (e.key === 'ArrowRight' || e.key === ' ') this.next();
+                        if (e.key === 'ArrowLeft') this.prev();
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
