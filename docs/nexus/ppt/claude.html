@@ -590,24 +590,26 @@ Nível 3: Agent Docs / Knowledge → Doutrina profunda (carregado sob demanda)</
 
                 <h3 class="section-subtitle">Exemplo real: PX-Nexus tem 5 CLAUDE.md + 2 agent_docs</h3>
                 <pre><code>px-nexus/
-├── CLAUDE.md                    # Nível 1 — Stack, comandos, guidelines
-├── .claude/
-│   ├── specs/                   # Nível 3 — Checkpoints de features
-│   │   └── archive/             # Specs historicas
-│   └── knowledge/               # Nível 3 — Guias de arquitetura
+├── CLAUDE.md                           # Nível 1 — Stack, comandos, guidelines
+├── .claude/                            # Nível 3 — Knowledge e specs
+│   ├── knowledge/
+│   │   └── architecture.md             # Guias de arquitetura
+│   └── specs/                          # Checkpoints de features
+│       └── archive/                    # Specs históricos
 ├── apps/
-│   ├── api/CLAUDE.md            # Nível 2 — Patterns tRPC, NestJS modules
+│   ├── api/
+│   │   └── CLAUDE.md                   # Nível 2 — Patterns tRPC, NestJS
 │   └── web/
-│       ├── CLAUDE.md            # Nível 2 — Feature-based, path aliases
-│       └── agent_docs/          # Nível 3 — Roteamento, dev workflow
-│           ├── architecture.md
-│           └── development.md
+│       ├── CLAUDE.md                   # Nível 2 — Feature-based, path aliases
+│       └── agent_docs/                 # Nível 3 — Doutrina
+│           ├── architecture.md         # Roteamento e estrutura
+│           └── development.md          # Dev workflow
 ├── packages/
-│   ├── db/CLAUDE.md             # Nível 2 — Migrations, naming, guardrails
-│   └── ui/CLAUDE.md             # Nível 2 — Component patterns
-└── .claude/
-    └── specs/                   # Nível 3 — Checkpoints de features
-        └── archive/             # Specs historicas</code></pre>
+│   ├── db/
+│   │   └── CLAUDE.md                   # Nível 2 — Migrations, guardrails
+│   └── ui/
+│       └── CLAUDE.md                   # Nível 2 — Component patterns
+└── collections/                        # Bruno API collections</code></pre>
 
                 <div class="highlight-box">
                     <strong>💰 Como isso economiza tokens:</strong>
