@@ -21,3 +21,5 @@
 stats-cache.json
 .ignore
 usage-data
+__pycache__/
+listen.skill
