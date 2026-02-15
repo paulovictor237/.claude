@@ -10,13 +10,9 @@
 - Examples: `acli jira issue create`, `acli confluence page list`, `acli jira issue view`, etc.
 - The Atlassian CLI provides more reliable and direct access to Atlassian functionality
 
-## Git Worktrees
+## References
 
-- **Worktree Directory:** `~/.claude/.claude-worktrees/{project-name}/{workflow-name}`
-- Localização global centralizada para todos os worktrees
+Para documentação detalhada e configurações específicas, consulte:
 
-## Context References
-
-Para configurações específicas de projetos e ferramentas, consulte os arquivos na pasta `context/`:
-
-- **Jira/Atlassian:** Configurações padrão do projeto em `~/.claude/context/jira-config.md`
+- **Skills:** Estrutura e convenções em `~/.claude/references/skills-conventions.md`
+- **Jira/Atlassian:** Configurações do projeto em `~/.claude/references/jira-config.md`
