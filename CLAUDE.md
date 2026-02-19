@@ -28,5 +28,4 @@
 
 Para documentação detalhada e configurações específicas, consulte:
 
-- **Skills:** Estrutura e convenções em `~/.claude/references/skills-conventions.md`
 - **Jira/Atlassian:** Configurações do projeto em `~/.claude/references/jira-config.md`
