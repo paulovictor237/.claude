@@ -1,9 +1,10 @@
 {
   "permissions": {
-    "ask": ["Git commit"],
+    "ask": [
+      "Git commit"
+    ],
     "defaultMode": "default"
   },
-  "model": "haiku",
   "hooks": {
     "Notification": [
       {
