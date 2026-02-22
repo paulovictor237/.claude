@@ -30,6 +30,16 @@
         "lastUpdated": "2026-02-22T19:52:27.112Z",
         "gitCommitSha": "aa296ec81e8ccb49c9784f167c2c0aa625a86cec"
       }
+    ],
+    "playground@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/paulovictor237/.claude/plugins/cache/claude-plugins-official/playground/aa296ec81e8c",
+        "version": "aa296ec81e8c",
+        "installedAt": "2026-02-22T23:08:29.816Z",
+        "lastUpdated": "2026-02-22T23:08:29.816Z",
+        "gitCommitSha": "aa296ec81e8ccb49c9784f167c2c0aa625a86cec"
+      }
     ]
   }
 }
