@@ -1,0 +1,68 @@
+# ============================================================
+# macOS
+# ============================================================
+.DS_Store
+
+# ============================================================
+# Dados de sessão e runtime (gerados automaticamente)
+# ============================================================
+
+# Backups automáticos de configuração gerados pelo Claude
+backups/
+
+# Cache geral (regenerado automaticamente)
+cache/
+
+# Logs de debug de sessões
+debug/
+
+# Downloads temporários
+downloads/
+
+# Ambiente de sessão (variáveis de ambiente da sessão atual)
+session-env/
+
+# Snapshots de shell (temporários, específicos da sessão)
+shell-snapshots/
+
+# Arquivos de lock do IDE (pid, sessão)
+ide/
+
+# Cache de autenticação MCP (regenerado ao logar)
+mcp-needs-auth-cache.json
+
+# ============================================================
+# Histórico de conversas (privado e pesado)
+# ============================================================
+
+# Histórico global de comandos
+history.jsonl
+
+# Histórico de conversas por projeto (contém contexto de sessões)
+projects/
+
+# Todos de sessão (gerados por sessão, não persistentes)
+todos/
+
+# ============================================================
+# Plugins (cache e dados regeneráveis)
+# ============================================================
+
+# Binários e arquivos dos plugins (reinstalável via `claude plugins install`)
+plugins/cache/
+
+# Cache de métricas de instalação
+plugins/install-counts-cache.json
+
+# Blocklist gerada automaticamente pelo Claude
+plugins/blocklist.json
+
+# ============================================================
+# Credenciais e segredos
+# ============================================================
+
+# Arquivos de variáveis de ambiente com tokens/chaves
+*.env
+
+
+file-history
