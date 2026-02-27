@@ -74,3 +74,4 @@ plans/
 tasks/
 
 __pycache__
+paste-cache/

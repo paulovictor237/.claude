@@ -24,21 +24,65 @@
     "skill-creator@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/paulovictor237/.claude/plugins/cache/claude-plugins-official/skill-creator/aa296ec81e8c",
-        "version": "aa296ec81e8c",
+        "installPath": "/Users/paulovictor237/.claude/plugins/cache/claude-plugins-official/skill-creator/55b58ec6e564",
+        "version": "55b58ec6e564",
         "installedAt": "2026-02-22T19:52:27.112Z",
-        "lastUpdated": "2026-02-22T19:52:27.112Z",
+        "lastUpdated": "2026-02-25T14:08:05.480Z",
         "gitCommitSha": "aa296ec81e8ccb49c9784f167c2c0aa625a86cec"
       }
     ],
     "playground@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/paulovictor237/.claude/plugins/cache/claude-plugins-official/playground/aa296ec81e8c",
-        "version": "aa296ec81e8c",
+        "installPath": "/Users/paulovictor237/.claude/plugins/cache/claude-plugins-official/playground/55b58ec6e564",
+        "version": "55b58ec6e564",
         "installedAt": "2026-02-22T23:08:29.816Z",
-        "lastUpdated": "2026-02-22T23:08:29.816Z",
+        "lastUpdated": "2026-02-25T14:08:05.478Z",
         "gitCommitSha": "aa296ec81e8ccb49c9784f167c2c0aa625a86cec"
+      }
+    ],
+    "github@claude-plugins-official": [
+      {
+        "scope": "project",
+        "installPath": "/Users/paulovictor237/.claude/plugins/cache/claude-plugins-official/github/55b58ec6e564",
+        "version": "55b58ec6e564",
+        "installedAt": "2026-02-25T14:51:29.372Z",
+        "lastUpdated": "2026-02-25T14:51:29.372Z",
+        "gitCommitSha": "55b58ec6e5649104f926ba7558b567dc8d33c5ff",
+        "projectPath": "/Users/paulovictor237/Workspace/px-academy-web"
+      }
+    ],
+    "code-review@claude-plugins-official": [
+      {
+        "scope": "project",
+        "installPath": "/Users/paulovictor237/.claude/plugins/cache/claude-plugins-official/code-review/55b58ec6e564",
+        "version": "55b58ec6e564",
+        "installedAt": "2026-02-25T14:51:30.130Z",
+        "lastUpdated": "2026-02-25T14:51:30.130Z",
+        "gitCommitSha": "55b58ec6e5649104f926ba7558b567dc8d33c5ff",
+        "projectPath": "/Users/paulovictor237/Workspace/px-academy-web"
+      }
+    ],
+    "code-simplifier@claude-plugins-official": [
+      {
+        "scope": "project",
+        "installPath": "/Users/paulovictor237/.claude/plugins/cache/claude-plugins-official/code-simplifier/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-25T14:51:30.135Z",
+        "lastUpdated": "2026-02-25T14:51:30.135Z",
+        "gitCommitSha": "55b58ec6e5649104f926ba7558b567dc8d33c5ff",
+        "projectPath": "/Users/paulovictor237/Workspace/px-academy-web"
+      }
+    ],
+    "atlassian@claude-plugins-official": [
+      {
+        "scope": "project",
+        "installPath": "/Users/paulovictor237/.claude/plugins/cache/claude-plugins-official/atlassian/63e369036b13",
+        "version": "63e369036b13",
+        "installedAt": "2026-02-25T14:51:30.842Z",
+        "lastUpdated": "2026-02-25T14:51:30.842Z",
+        "gitCommitSha": "63e369036b1352ab49e0d1330b0e4ed301074d8b",
+        "projectPath": "/Users/paulovictor237/Workspace/px-academy-web"
       }
     ]
   }
