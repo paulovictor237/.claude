@@ -5,7 +5,7 @@
       "repo": "anthropics/claude-plugins-official"
     },
     "installLocation": "/Users/paulovictor237/.claude/plugins/marketplaces/claude-plugins-official",
-    "lastUpdated": "2026-02-26T23:41:16.547Z"
+    "lastUpdated": "2026-02-28T16:44:19.414Z"
   },
   "px-center": {
     "source": {
@@ -13,6 +13,6 @@
       "repo": "px-center/px-coding-agents"
     },
     "installLocation": "/Users/paulovictor237/.claude/plugins/marketplaces/px-center",
-    "lastUpdated": "2026-02-22T20:03:11.226Z"
+    "lastUpdated": "2026-02-28T16:41:18.634Z"
   }
 }
