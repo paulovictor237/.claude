@@ -80,3 +80,15 @@ A skill irá:
 - `Bash(edge-tts*)` - Geração de áudio neural
 - `Bash(afplay*)` - Reprodução de áudio no macOS
 - `Bash(cat > /tmp/listen_*)` - Criação de arquivos temporários com heredoc
+
+## Dependências
+
+Esta skill requer `edge-tts` (Python) e `afplay` (nativo do macOS).
+
+Se o comando `edge-tts` não estiver disponível, rode o script de instalação:
+
+```bash
+bash ~/.claude/skills/listen/scripts/install.sh
+```
+
+O script verifica e instala automaticamente o que estiver faltando. Consulte [scripts/install.sh](scripts/install.sh) para detalhes.
