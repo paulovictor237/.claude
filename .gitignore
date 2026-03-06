@@ -1,0 +1,26 @@
+# Files
+# CLAUDE.md
+history.jsonl
+mcp-needs-auth-cache.json
+policy-limits.json
+remote-settings.json
+# settings.json
+# statusline.sh
+
+# Directories
+# agents/
+backups/
+cache/
+debug/
+# docs/
+downloads/
+file-history/
+ide/
+# plans/
+plugins/
+projects/
+# references/
+session-env/
+shell-snapshots/
+# skills/
+# skills-bkp/
