@@ -1,8 +1,6 @@
 {
   "permissions": {
-    "ask": [
-      "Git commit"
-    ],
+    "ask": ["Git commit"],
     "defaultMode": "default"
   },
   "hooks": {
@@ -49,9 +47,10 @@
     "php-lsp@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
-    "playground@claude-plugins-official": true,
+    "playground@claude-plugins-official": false,
     "superpowers@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true
+    "frontend-design@claude-plugins-official": true,
+    "context7@claude-plugins-official": true
   },
   "language": "portugues-br"
 }
