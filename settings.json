@@ -1,6 +1,8 @@
 {
   "permissions": {
-    "ask": ["Git commit"],
+    "ask": [
+      "Git commit"
+    ],
     "defaultMode": "default"
   },
   "hooks": {
@@ -52,5 +54,6 @@
     "frontend-design@claude-plugins-official": true,
     "context7@claude-plugins-official": true
   },
+  "extraKnownMarketplaces": {},
   "language": "portugues-br"
 }
