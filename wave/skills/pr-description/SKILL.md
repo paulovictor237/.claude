@@ -30,10 +30,10 @@ Leia o arquivo `/.github/pull_request_template.md` na **raiz do projeto atual** 
 
 ## Passo 2 — Detectar o branch base
 
-Execute o script `scripts/find_parent_branch.py` para encontrar o branch pai mais provável:
+O script de detecção de branch base está na **pasta da própria skill**. Execute-o assim:
 
 ```bash
-python scripts/find_parent_branch.py --verbose
+python ~/.claude/skills/pr-description/scripts/find_parent_branch.py
 ```
 
 O script retorna até 3 candidatos ordenados por relevância (menor distância de commits). Apresente os candidatos ao usuário no formato:
@@ -50,7 +50,7 @@ Qual branch deve ser o destino do PR? [Enter para usar o #1]
 
 Aguarde a resposta do usuário. Se o usuário pressionar Enter ou confirmar sem especificar, use o **#1 (primeiro candidato)** como branch base.
 
-> **Se o script não existir** no projeto atual: use `git log --oneline -10` + `git branch -r` para inferir o branch base, ou pergunte ao usuário.
+> **Se o script não existir**: use `git log --oneline -10` + `git branch -r` para inferir o branch base, ou pergunte ao usuário.
 
 ## Passo 3 — Coletar contexto
 
@@ -59,9 +59,16 @@ Com o branch base definido (`BASE_BRANCH`), colete informações para preencher 
 1. **Diff das mudanças** — `git diff origin/BASE_BRANCH...HEAD` para ver o que foi alterado.
 2. **Commits do branch** — `git log origin/BASE_BRANCH...HEAD --oneline` para entender a narrativa.
 3. **Arquivos modificados** — `git diff origin/BASE_BRANCH...HEAD --name-only` para visão rápida do escopo.
-4. **Ticket do Jira** — se o branch ou commits tiverem um ID de ticket (ex: `APX-1234`), consulte com `acli jira issue view APX-1234` para contexto do requisito.
+4. **Ticket do Jira** — se o branch ou commits tiverem um ID de ticket (ex: `APX-1234`), **antes de consultar**, pergunte ao usuário:
+
+```
+Encontrei o ticket APX-1234 no branch. Deseja que eu busque mais informações no Jira para enriquecer a descrição? [S/n]
+```
+
+Se confirmar, execute: `acli jira issue view APX-1234`
 
 Não peça ao usuário informações que você pode descobrir sozinho com essas ferramentas.
+Fontes externas (Jira, etc.) devem ser consultadas **apenas com confirmação explícita do usuário**.
 
 ## Passo 4 — Preencher o template
 
