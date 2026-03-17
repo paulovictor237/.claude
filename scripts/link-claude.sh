@@ -4,9 +4,37 @@
 
 set -euo pipefail
 
+# ---------------------------------------------------------------------------
+# CONFIGURAÇÃO — ajuste conforme necessário
+# ---------------------------------------------------------------------------
+
+# Diretório destino (onde os links serão criados)
+TARGET_DIR="$HOME/.claude"
+
+# Pasta de assets dentro do projeto
+ASSETS_DIR="wave"
+
+# Subpastas de $ASSETS_DIR a serem linkadas em $TARGET_DIR
+# Formato: "pasta_fonte:nome_no_destino"
+SUBDIR_LINKS=(
+  "agents:agents"
+  "commands:commands"
+  "skills:skills"
+)
+
+# Arquivos na raiz do projeto a serem linkados em $TARGET_DIR
+# Formato: "arquivo_fonte:nome_no_destino"
+FILE_LINKS=(
+  "AGENT.md:CLAUDE.md"
+  "settings.json:settings.json"
+  "statusline.sh:statusline.sh"
+)
+
+# ---------------------------------------------------------------------------
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-CLAUDE_DIR="$HOME/.claude"
+CLAUDE_DIR="$TARGET_DIR"
 
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -56,15 +84,19 @@ echo "Project: $PROJECT_DIR"
 echo "Target:  $CLAUDE_DIR"
 echo ""
 
-# wave/ subdirectories
-link_item "$PROJECT_DIR/wave/agents"   "$CLAUDE_DIR/agents"
-link_item "$PROJECT_DIR/wave/commands" "$CLAUDE_DIR/commands"
-link_item "$PROJECT_DIR/wave/skills"   "$CLAUDE_DIR/skills"
+# Asset subdirectories
+for entry in "${SUBDIR_LINKS[@]}"; do
+  src_name="${entry%%:*}"
+  dst_name="${entry##*:}"
+  link_item "$PROJECT_DIR/$ASSETS_DIR/$src_name" "$TARGET_DIR/$dst_name"
+done
 
 # Root-level files
-link_item "$PROJECT_DIR/AGENT.md"      "$CLAUDE_DIR/CLAUDE.md"
-link_item "$PROJECT_DIR/settings.json" "$CLAUDE_DIR/settings.json"
-link_item "$PROJECT_DIR/statusline.sh" "$CLAUDE_DIR/statusline.sh"
+for entry in "${FILE_LINKS[@]}"; do
+  src_name="${entry%%:*}"
+  dst_name="${entry##*:}"
+  link_item "$PROJECT_DIR/$src_name" "$TARGET_DIR/$dst_name"
+done
 
 echo ""
 echo "Done."
