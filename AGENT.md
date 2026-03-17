@@ -23,9 +23,3 @@
   - Refactoring operations (rename, extract, etc.)
 - LSP is especially useful when working with strongly-typed languages (TypeScript, Go, Rust, Java, C#, etc.)
 - Use LSP to complement other tools like Grep and Glob for more precise code navigation
-
-## Context References
-
-Para documentação detalhada e configurações específicas, consulte:
-
-- **Jira/Atlassian:** Configurações do projeto em `~/.claude/references/jira-config.md`
