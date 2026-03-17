@@ -1,0 +1,43 @@
+{
+  "bases": [
+    {
+      "name": "postgresql-prod",
+      "type": "postgresql",
+      "read_only": false,
+      "config": {
+        "host": "localhost",
+        "port": 5432,
+        "database": "db_name",
+        "user": "user",
+        "password": "password"
+      }
+    },
+    {
+      "name": "postgresql-readonly",
+      "type": "postgresql",
+      "read_only": true,
+      "config": {
+        "host": "replica.example.com",
+        "port": 5432,
+        "database": "db_name",
+        "user": "readonly_user",
+        "password": "password"
+      }
+    },
+    {
+      "name": "docker-local",
+      "type": "postgresql",
+      "read_only": false,
+      "docker_container": "my-postgres-container",
+      "config": {
+        "database": "db_name",
+        "user": "user",
+        "password": "password"
+      }
+    }
+  ],
+  "settings": {
+    "transaction_timeout_ms": 60000,
+    "max_rows_preview": 10
+  }
+}
