@@ -27,7 +27,6 @@ SUBDIR_LINKS=(
 FILE_LINKS=(
   "AGENT.md:CLAUDE.md"
   "settings.json:settings.json"
-  "statusline.sh:statusline.sh"
 )
 
 # ---------------------------------------------------------------------------
