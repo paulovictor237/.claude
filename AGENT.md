@@ -23,3 +23,18 @@
   - Refactoring operations (rename, extract, etc.)
 - LSP is especially useful when working with strongly-typed languages (TypeScript, Go, Rust, Java, C#, etc.)
 - Use LSP to complement other tools like Grep and Glob for more precise code navigation
+
+## Skill Development Guidelines
+
+- **Ao criar ou atualizar uma skill, SEMPRE otimize com scripts** para economizar tokens
+- **Prefira scripts a respostas em texto**: scripts são mais rápidos, precisos e consomem muito menos tokens
+- Use `bash` ou `python` — ambos são boas práticas; escolha o mais adequado para cada situação:
+  - Prefira **bash** para operações de sistema, pipes, chamadas de CLI e transformações simples com `jq`, `awk`, `grep`, `sed`
+  - Prefira **python** para lógica mais complexa, manipulação estruturada de dados (JSON, YAML, CSV), ou quando a legibilidade for prioritária
+- Exemplos de otimizações com scripts:
+  - Colete dados estruturados (JSON, listas, contagens) com um script em vez de ler arquivos um a um
+  - Filtre e transforme dados diretamente no terminal sem precisar de múltiplas chamadas de ferramenta
+  - Evite ler arquivos inteiros quando um script pode extrair apenas o trecho necessário
+  - Prefira um único script que faça múltiplas operações a várias chamadas de ferramenta separadas
+  - Use scripts para validar pré-condições antes de executar ações (ex: verificar se branch existe, se PR está aberto, etc.)
+- **Regra de ouro**: se uma informação pode ser obtida com um script em vez de múltiplos `view`/`grep`/`glob`, use o script
