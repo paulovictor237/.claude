@@ -47,24 +47,23 @@ Se negar ou falhar, peça o número: `Qual o número do PR? #`
 
 ## Passo 2 — Pré-processar comentários
 
-Verifique se já existe cache do PR:
-
-```bash
-ls /tmp/pr-{PR_NUMBER}-comments.json 2>/dev/null && echo "cache_existe" || echo "sem_cache"
-```
-
-**Se cache existe:** verifique progresso com `pr-progress.sh` e pergunte:
-```
-Encontrei uma sessão anterior para este PR:
-  Aplicados: X | Pulados: Y | Pendentes: Z
-
-Deseja retomar de onde parou? [S/n]
-```
-
-**Se não existe (ou usuário quer recomeçar):** execute o script de fetch:
+Sempre re-fetche do GitHub para garantir dados atualizados:
 
 ```bash
 ~/.claude/skills/pr-comments-flow/scripts/pr-fetch.sh {PR_NUMBER}
+```
+
+Se existir progresso anterior (`/tmp/pr-{N}-progress.json`), após o fetch pergunte:
+```
+Encontrei progresso de uma sessão anterior:
+  Aplicados: X | Pulados: Y
+
+Deseja manter este progresso (não revisitar comentários já tratados)? [S/n]
+```
+
+Se "N", delete o arquivo de progresso:
+```bash
+rm /tmp/pr-{PR_NUMBER}-progress.json
 ```
 
 Se não houver comentários pendentes, informe: `Nenhum comentário de review aberto encontrado neste PR.`
@@ -247,7 +246,7 @@ Volte ao **Passo 4** com `pr-next-comment.sh` para o próximo comentário.
 - **Sempre proponha antes de agir** — nunca altere sem confirmação.
 - **Use os scripts, não a API inline** — nunca chame `gh api` diretamente quando há script disponível.
 - **Contexto mínimo** — use `pr-excerpt.sh` em vez de Read para arquivos; use `pr-next-comment.sh` em vez de ler o JSON inteiro.
-- **Cache primeiro** — sempre verifique se `/tmp/pr-{N}-comments.json` existe antes de fazer novo fetch.
+- **Sempre re-fetche** — nunca use cache de comentários; sempre rode `pr-fetch.sh` ao iniciar para garantir sincronização com o GitHub.
 - **Não trave em erros de API** — se resolver o thread falhar, avise e continue.
 - **Sempre pergunte sobre CLAUDE.md** — após cada comentário aplicado, pergunte se o usuário quer criar uma instrução. Só elabore a regra após confirmação. Use sempre o `CLAUDE.md` mais próximo do CWD (busca subindo a partir do diretório atual). Só use `CLAUDE.local.md` se o usuário solicitar explicitamente.
 - **Linguagem**: responda sempre em português.
