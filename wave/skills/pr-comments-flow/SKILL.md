@@ -170,30 +170,41 @@ Se `thread_id` for `null`, pule a resolução sem erro.
 
 ---
 
-## Passo 6 — Avaliar aprendizado (seletivo)
+## Passo 6 — Propor aprendizado para o CLAUDE.md
 
-Após resolver, pergunte-se: **esse erro poderia ser evitado com uma regra no CLAUDE.md?**
-
-Critérios para propor regra:
-- Padrão de erro recorrente (não pontual)
-- Aplicável a múltiplos contextos futuros
-- Não é óbvio nem já coberto por boas práticas gerais
-
-Se sim, proponha:
+Após resolver cada comentário **aplicado**, pergunte sempre:
 
 ```
-📚 Aprendizado potencial:
-Sugiro adicionar ao CLAUDE.md local:
-
-  "Sempre validar argumentos negativos/nulos em métodos de cobrança antes de
-   chamar gateways de pagamento."
-
-Quer adicionar? [S/n]
+Quer criar uma instrução para o CLAUDE.md do projeto com base neste comentário? [S/n]
 ```
 
-Se confirmar, adicione à seção `## Regras derivadas de Code Review` no `CLAUDE.md` local (crie se não existir).
+**Se "S":** analise o padrão identificado e proponha uma regra concreta:
 
-**Não proponha para cada comentário** — apenas quando houver real valor preventivo.
+```
+📚 Sugestão para o CLAUDE.md:
+
+  "Antes de definir um novo tipo TypeScript, verifique se ele já existe no projeto —
+   tipos costumam estar centralizados em types.ts dentro do feature folder."
+
+Adiciono? [S/n]
+```
+
+Se confirmar, encontre o CLAUDE.md mais próximo do diretório atual e adicione à seção `## Regras derivadas de Code Review` (crie a seção se não existir):
+
+```bash
+# Encontra o CLAUDE.md mais próximo subindo a partir do CWD
+dir=$(pwd)
+while [[ "$dir" != "/" ]]; do
+  [[ -f "$dir/CLAUDE.md" ]] && { echo "$dir/CLAUDE.md"; break; }
+  dir=$(dirname "$dir")
+done
+```
+
+Se nenhum arquivo for encontrado, crie `CLAUDE.md` no diretório atual.
+
+> Use `CLAUDE.local.md` apenas se o usuário solicitar explicitamente (ex: "adiciona no local", "não quero versionar").
+
+**Se "N":** siga para o próximo comentário sem nenhuma ação adicional.
 
 ---
 
@@ -238,5 +249,5 @@ Volte ao **Passo 4** com `pr-next-comment.sh` para o próximo comentário.
 - **Contexto mínimo** — use `pr-excerpt.sh` em vez de Read para arquivos; use `pr-next-comment.sh` em vez de ler o JSON inteiro.
 - **Cache primeiro** — sempre verifique se `/tmp/pr-{N}-comments.json` existe antes de fazer novo fetch.
 - **Não trave em erros de API** — se resolver o thread falhar, avise e continue.
-- **Regras no CLAUDE.md com parcimônia** — só quando houver real valor preventivo.
+- **Sempre pergunte sobre CLAUDE.md** — após cada comentário aplicado, pergunte se o usuário quer criar uma instrução. Só elabore a regra após confirmação. Use sempre o `CLAUDE.md` mais próximo do CWD (busca subindo a partir do diretório atual). Só use `CLAUDE.local.md` se o usuário solicitar explicitamente.
 - **Linguagem**: responda sempre em português.
