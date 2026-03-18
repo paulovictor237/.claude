@@ -1,3 +1,7 @@
+## Code Style
+
+- **NEVER adicione comentários no código** — nem inline, nem de bloco, nem docstrings/JSDoc. O código deve ser autoexplicativo.
+
 ## Tool Preferences
 
 - **ALWAYS use GitHub CLI (`gh`) via the Bash tool** for all GitHub-related tasks
