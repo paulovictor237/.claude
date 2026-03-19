@@ -26,6 +26,7 @@ SUBDIR_LINKS=(
 # Formato: "arquivo_fonte:nome_no_destino"
 FILE_LINKS=(
   "AGENT.md:CLAUDE.md"
+  "RTK.md:RTK.md"
   "settings.json:settings.json"
 )
 

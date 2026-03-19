@@ -1,10 +1,18 @@
 {
   "permissions": {
-    "ask": [
-      "Git commit"
+    "allow": [
+      "mcp__codegraph__codegraph_search",
+      "mcp__codegraph__codegraph_context",
+      "mcp__codegraph__codegraph_callers",
+      "mcp__codegraph__codegraph_callees",
+      "mcp__codegraph__codegraph_impact",
+      "mcp__codegraph__codegraph_node",
+      "mcp__codegraph__codegraph_status"
     ],
+    "ask": ["Git commit"],
     "defaultMode": "default"
   },
+  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
@@ -35,6 +43,38 @@
           {
             "type": "command",
             "command": "osascript -e 'display notification \"Tarefa Concluída/Parada\" with title \"Claude Code\"' && afplay /System/Library/Sounds/Glass.aiff"
+          }
+        ]
+      },
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "codegraph sync-if-dirty"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "codegraph mark-dirty",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/peve/.claude/hooks/rtk-rewrite.sh"
           }
         ]
       }
