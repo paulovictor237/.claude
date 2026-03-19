@@ -2,6 +2,8 @@
 
 Configuração pessoal do ambiente Claude Code.
 
+🌐 **[Agent Overview](https://paulovictor237.github.io/PeveAgent/)** — catálogo dinâmico de skills, agents e commands.
+
 ## Setup
 
 ```bash
