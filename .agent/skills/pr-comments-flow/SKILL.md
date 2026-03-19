@@ -14,6 +14,7 @@ Todos os scripts estão em `~/.claude/skills/pr-comments-flow/scripts/` e devem 
 | `pr-fetch.sh <PR>` | Passo 2 | Busca, deduplica e salva comentários em `/tmp/pr-{N}-comments.json` |
 | `pr-next-comment.sh [PR]` | Passo 4 | Retorna próximo comentário pendente como JSON |
 | `pr-excerpt.sh <file> <line> [ctx=15]` | Passo 4 | Extrai trecho do arquivo ao redor de uma linha |
+| `pr-reply.sh <comment_id> <body>` | Passo 5 | Posta resposta no thread do comentário |
 | `pr-resolve.sh <thread_id>` | Passo 5 | Marca thread como resolvido no GitHub |
 | `pr-update-progress.sh <PR> <id> <status>` | Passo 5 | Atualiza arquivo de progresso (`applied`/`skipped`) |
 | `pr-progress.sh [PR]` | Qualquer momento | Exibe resumo do progresso atual |
@@ -148,6 +149,22 @@ Aguarde resposta antes de qualquer ação.
 - **[1] Aplicar** — implemente. Após implementar, confirme brevemente.
 - **[2] Pular** — não altere nada. Passe para o próximo.
 - **[3] Discutir** — ouça a sugestão, atualize a proposta, pergunte novamente.
+- **[4] Responder no PR** — compor uma resposta para o thread do GitHub sem alterar código.
+
+Quando o usuário escolher **[4]**, elabore a resposta e mostre para aprovação:
+
+```
+💬 Resposta proposta:
+"[texto da resposta]"
+
+Postar no thread? [S/n]
+```
+
+Só poste após confirmação:
+
+```bash
+~/.claude/skills/pr-comments-flow/scripts/pr-reply.sh {COMMENT_ID} "{REPLY_BODY}"
+```
 
 ---
 

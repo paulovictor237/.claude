@@ -12,6 +12,18 @@ Cria symlinks de `wave/`, `AGENT.md`, `RTK.md` e `settings.json` para `~/.claude
 
 ---
 
+### ccstatusline
+
+Status line para o Claude Code.
+
+- Repo: https://github.com/sirmalloc/ccstatusline
+
+```bash
+npx -y ccstatusline@latest
+```
+
+---
+
 ## Ferramentas
 
 ### RTK
@@ -39,13 +51,3 @@ npx @colbymchenry/codegraph
 ```
 
 ---
-
-### ccstatusline
-
-Status line para o Claude Code.
-
-- Repo: https://github.com/sirmalloc/ccstatusline
-
-```bash
-npx -y ccstatusline@latest
-```

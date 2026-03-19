@@ -12,7 +12,7 @@ set -euo pipefail
 TARGET_DIR="$HOME/.claude"
 
 # Pasta de assets dentro do projeto
-ASSETS_DIR="wave"
+ASSETS_DIR=".agent"
 
 # Subpastas de $ASSETS_DIR a serem linkadas em $TARGET_DIR
 # Formato: "pasta_fonte:nome_no_destino"
