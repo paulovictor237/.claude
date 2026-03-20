@@ -412,6 +412,42 @@
     .md-content a { color: var(--accent2); }
     .md-content hr { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
 
+    /* ── Slide card (link) ── */
+    .card-slide {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.25rem;
+      text-decoration: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .card-slide:hover {
+      background: var(--bg3);
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+
+    .card-slide:hover .slide-open-badge {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .slide-open-badge {
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--text-dim);
+      font-size: 0.68rem;
+      margin-left: auto;
+      padding: 0.15rem 0.5rem;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
     /* ── Footer ── */
     footer {
       border-top: 1px solid var(--border);
@@ -468,6 +504,9 @@
   <button class="tab-btn" data-tab="commands">
     Commands <span class="tab-count" id="count-commands">—</span>
   </button>
+  <button class="tab-btn" data-tab="slides">
+    Slides <span class="tab-count" id="count-slides">—</span>
+  </button>
 </nav>
 
 <main>
@@ -491,6 +530,13 @@
       <span class="search-hint" id="hint-commands"></span>
     </div>
     <div class="cards-grid" id="grid-commands"></div>
+  </section>
+  <section class="tab-panel" id="tab-slides">
+    <div class="search-bar">
+      <input class="search-input" id="search-slides" type="search" placeholder="🔍 buscar slide..." autocomplete="off" />
+      <span class="search-hint" id="hint-slides"></span>
+    </div>
+    <div class="cards-grid" id="grid-slides"></div>
   </section>
 </main>
 
@@ -771,6 +817,93 @@ async function onCardClick(e) {
   }
 }
 
+async function extractTitle(rawHtml) {
+  const match = rawHtml.match(/<title[^>]*>([^<]+)<\/title>/i);
+  return match ? match[1].trim() : null;
+}
+
+function slideCardHtml(slide) {
+  const url = `https://${OWNER}.github.io/${REPO}/${slide.htmlPath}`;
+  return `
+    <a class="card-slide"
+      href="${url}"
+      target="_blank"
+      rel="noopener"
+      data-name="${slide.title.toLowerCase()}"
+      data-desc="">
+      <div class="card-header">
+        <span class="card-icon">🎞</span>
+        <span class="card-name">${slide.title}</span>
+        <span class="slide-open-badge">↗ abrir apresentação</span>
+      </div>
+      ${slide.dir !== slide.title.toLowerCase() ? `<p class="card-desc" style="font-size:0.72rem;color:var(--text-dim)">${slide.dir}</p>` : ''}
+    </a>
+  `;
+}
+
+async function loadSlidesSection() {
+  const grid = document.getElementById('grid-slides');
+  const countEl = document.getElementById('count-slides');
+  grid.innerHTML = skeletonCards(2);
+
+  try {
+    const entries = await apiFetch(`${BASE}/contents/slides`);
+    const dirs = entries.filter(e => e.type === 'dir');
+
+    if (dirs.length === 0) {
+      grid.innerHTML = noticeHtml('Nenhuma apresentação encontrada.');
+      countEl.textContent = '0';
+      return;
+    }
+
+    const slides = (await Promise.all(
+      dirs.map(async dir => {
+        try {
+          const files = await apiFetch(`${BASE}/contents/slides/${dir.name}`);
+          const htmlFile = files.find(f => f.type === 'file' && f.name.endsWith('.html'));
+          if (!htmlFile) return null;
+          const htmlPath = `slides/${dir.name}/${htmlFile.name}`;
+          const raw = await fetchMarkdown(htmlPath);
+          const title = await extractTitle(raw) || dir.name;
+          return { dir: dir.name, htmlPath, title };
+        } catch {
+          return null;
+        }
+      })
+    )).filter(Boolean);
+
+    if (slides.length === 0) {
+      grid.innerHTML = noticeHtml('Nenhuma apresentação encontrada.');
+      countEl.textContent = '0';
+      return;
+    }
+
+    countEl.textContent = slides.length;
+    grid.innerHTML = slides.map(slideCardHtml).join('');
+
+    const searchEl = document.getElementById('search-slides');
+    searchEl.addEventListener('input', () => {
+      const q = searchEl.value.toLowerCase().trim();
+      let visible = 0;
+      grid.querySelectorAll('.card-slide').forEach(card => {
+        const show = !q || card.dataset.name.includes(q);
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      const noRes = grid.querySelector('.no-results');
+      if (visible === 0 && !noRes) grid.insertAdjacentHTML('beforeend', '<p class="no-results">nenhum resultado encontrado</p>');
+      else if (visible > 0 && noRes) noRes.remove();
+    });
+  } catch (err) {
+    if (err.message === 'rate_limit') {
+      grid.innerHTML = noticeHtml('⚠️ Rate limit atingido. Tente em alguns minutos.', 'warn');
+    } else {
+      grid.innerHTML = noticeHtml(`Erro ao carregar: ${err.message}`, 'error');
+    }
+    countEl.textContent = '!';
+  }
+}
+
 async function loadRepoMeta() {
   try {
     const repo = await apiFetch(`${BASE}`);
@@ -841,7 +974,8 @@ async function init() {
       countId: 'count-commands',
       apiPath: '.agent/commands',
       type: 'command'
-    })
+    }),
+    loadSlidesSection()
   ]);
 }
 
