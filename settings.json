@@ -9,7 +9,9 @@
       "mcp__codegraph__codegraph_node",
       "mcp__codegraph__codegraph_status"
     ],
-    "ask": ["Git commit"],
+    "ask": [
+      "Git commit"
+    ],
     "defaultMode": "default"
   },
   "model": "opus[1m]",
@@ -88,9 +90,7 @@
   "enabledPlugins": {
     "php-lsp@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true,
     "playground@claude-plugins-official": false,
-    "frontend-design@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true
   },
