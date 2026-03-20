@@ -188,14 +188,59 @@
       margin-top: 0.25rem;
     }
 
+    /* ── Search bar ── */
+    .search-bar {
+      margin-bottom: 1.25rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      outline: none;
+      padding: 0.5rem 0.85rem;
+      transition: border-color 0.15s;
+      width: 260px;
+    }
+
+    .search-input::placeholder { color: var(--text-dim); }
+    .search-input:focus { border-color: var(--accent2); }
+
+    .search-hint {
+      color: var(--text-dim);
+      font-size: 0.7rem;
+    }
+
+    .no-results {
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      grid-column: 1 / -1;
+      padding: 1.5rem 0;
+      text-align: center;
+    }
+
+    /* ── Tags ── */
     .tag {
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 3px;
       color: var(--text-dim);
+      cursor: pointer;
+      font-family: var(--font-mono);
       font-size: 0.65rem;
       padding: 0.1rem 0.4rem;
+      transition: all 0.12s;
     }
+
+    .tag:hover { border-color: var(--accent2); color: var(--accent2); }
+    .tag.active { background: var(--accent2); border-color: var(--accent2); color: var(--bg); }
 
     /* ── Skeletons ── */
     @keyframes shimmer {
@@ -265,9 +310,32 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 0.75rem;
       border-bottom: 1px solid var(--border);
       padding: 1rem 1.5rem;
+      flex-wrap: wrap;
     }
+
+    .modal-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .modal-gh-link {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      text-decoration: none;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .modal-gh-link:hover { border-color: var(--accent2); color: var(--accent2); text-decoration: none; }
 
     .modal-title {
       color: var(--accent);
@@ -404,12 +472,24 @@
 
 <main>
   <section class="tab-panel active" id="tab-skills">
+    <div class="search-bar">
+      <input class="search-input" id="search-skills" type="search" placeholder="🔍 buscar skill..." autocomplete="off" />
+      <span class="search-hint" id="hint-skills"></span>
+    </div>
     <div class="cards-grid" id="grid-skills"></div>
   </section>
   <section class="tab-panel" id="tab-agents">
+    <div class="search-bar">
+      <input class="search-input" id="search-agents" type="search" placeholder="🔍 buscar agent..." autocomplete="off" />
+      <span class="search-hint" id="hint-agents"></span>
+    </div>
     <div class="cards-grid" id="grid-agents"></div>
   </section>
   <section class="tab-panel" id="tab-commands">
+    <div class="search-bar">
+      <input class="search-input" id="search-commands" type="search" placeholder="🔍 buscar command..." autocomplete="off" />
+      <span class="search-hint" id="hint-commands"></span>
+    </div>
     <div class="cards-grid" id="grid-commands"></div>
   </section>
 </main>
@@ -417,7 +497,10 @@
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title" id="modal-title"></span>
+      <div class="modal-header-left">
+        <span class="modal-title" id="modal-title"></span>
+        <a class="modal-gh-link" id="modal-gh-link" href="#" target="_blank" rel="noopener">↗ ver no GitHub</a>
+      </div>
       <button class="modal-close" id="modal-close">✕ fechar</button>
     </div>
     <div class="modal-body">
@@ -468,13 +551,17 @@ function decodeBase64(b64) {
 
 function parseFrontmatter(raw) {
   const match = raw.match(/^---\n([\s\S]*?)\n---/);
-  if (!match) return { name: null, description: null, body: raw };
+  if (!match) return { name: null, description: null, allowedTools: [], body: raw };
   try {
     const fm = jsyaml.load(match[1]);
     const body = raw.slice(match[0].length).trim();
-    return { name: fm.name || null, description: fm.description || null, body };
+    const rawTools = fm['allowed-tools'] || fm['allowedTools'] || '';
+    const allowedTools = typeof rawTools === 'string'
+      ? rawTools.split(',').map(t => t.trim()).filter(Boolean)
+      : Array.isArray(rawTools) ? rawTools : [];
+    return { name: fm.name || null, description: fm.description || null, allowedTools, body };
   } catch {
-    return { name: null, description: null, body: raw };
+    return { name: null, description: null, allowedTools: [], body: raw };
   }
 }
 
@@ -494,9 +581,17 @@ function noticeHtml(msg, type = '') {
 
 function cardHtml(item) {
   const icons = { skill: '⚡', agent: '🤖', command: '⌘' };
-  const tags = item.tags?.map(t => `<span class="tag">${t}</span>`).join('') ?? '';
+  const toolsJson = JSON.stringify(item.allowedTools || []);
+  const tags = (item.allowedTools || [])
+    .map(t => `<button class="tag" data-tool="${t}">${t}</button>`)
+    .join('');
   return `
-    <div class="card" data-path="${item.path}" data-title="${item.name}">
+    <div class="card"
+      data-path="${item.path}"
+      data-title="${item.name}"
+      data-name="${item.name.toLowerCase()}"
+      data-desc="${(item.description || '').toLowerCase()}"
+      data-tools='${toolsJson}'>
       <div class="card-header">
         <span class="card-icon">${icons[item.type] ?? '▸'}</span>
         <span class="card-name">${item.name}</span>
@@ -505,6 +600,54 @@ function cardHtml(item) {
       ${tags ? `<div class="card-footer">${tags}</div>` : ''}
     </div>
   `;
+}
+
+function applyFilters(gridEl, searchText, activeTool) {
+  let visible = 0;
+  gridEl.querySelectorAll('.card').forEach(card => {
+    const matchSearch = !searchText ||
+      card.dataset.name.includes(searchText) ||
+      card.dataset.desc.includes(searchText);
+    const tools = JSON.parse(card.dataset.tools || '[]');
+    const matchTool = !activeTool || tools.includes(activeTool);
+    const show = matchSearch && matchTool;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  const noRes = gridEl.querySelector('.no-results');
+  if (visible === 0 && !noRes) {
+    gridEl.insertAdjacentHTML('beforeend', '<p class="no-results">nenhum resultado encontrado</p>');
+  } else if (visible > 0 && noRes) {
+    noRes.remove();
+  }
+}
+
+function initSectionFilters(gridId, searchId, hintId) {
+  const grid = document.getElementById(gridId);
+  const searchEl = document.getElementById(searchId);
+  const hintEl = document.getElementById(hintId);
+  let activeTool = null;
+
+  searchEl.addEventListener('input', () => {
+    applyFilters(grid, searchEl.value.toLowerCase().trim(), activeTool);
+  });
+
+  grid.addEventListener('click', e => {
+    const tag = e.target.closest('.tag');
+    if (!tag) return;
+    e.stopPropagation();
+    const tool = tag.dataset.tool;
+    if (activeTool === tool) {
+      activeTool = null;
+      hintEl.textContent = '';
+      grid.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+    } else {
+      activeTool = tool;
+      hintEl.textContent = `filtro: ${tool}`;
+      grid.querySelectorAll('.tag').forEach(t => t.classList.toggle('active', t.dataset.tool === tool));
+    }
+    applyFilters(grid, searchEl.value.toLowerCase().trim(), activeTool);
+  });
 }
 
 async function fetchMarkdown(path) {
@@ -538,10 +681,10 @@ async function loadSection({ gridId, countId, apiPath, type, mdFileName }) {
         const mdPath = `${apiPath}/${dir.name}/${mdFileName}`;
         try {
           const raw = await fetchMarkdown(mdPath);
-          const { name, description } = parseFrontmatter(raw);
-          return { type, name: name || dir.name, description, path: mdPath };
+          const { name, description, allowedTools } = parseFrontmatter(raw);
+          return { type, name: name || dir.name, description, allowedTools, path: mdPath };
         } catch {
-          return { type, name: dir.name, description: null, path: mdPath };
+          return { type, name: dir.name, description: null, allowedTools: [], path: mdPath };
         }
       })
     );
@@ -549,6 +692,7 @@ async function loadSection({ gridId, countId, apiPath, type, mdFileName }) {
     countEl.textContent = items.length;
     grid.innerHTML = items.map(cardHtml).join('');
     grid.querySelectorAll('.card').forEach(card => card.addEventListener('click', onCardClick));
+    initSectionFilters(gridId, `search-${gridId.replace('grid-','')}`, `hint-${gridId.replace('grid-','')}`);
   } catch (err) {
     if (err.message === 'rate_limit') {
       grid.innerHTML = noticeHtml(
@@ -581,10 +725,10 @@ async function loadSingleFileSection({ gridId, countId, apiPath, type }) {
       files.map(async file => {
         try {
           const raw = await fetchMarkdown(`${apiPath}/${file.name}`);
-          const { name, description } = parseFrontmatter(raw);
-          return { type, name: name || file.name.replace('.md',''), description, path: `${apiPath}/${file.name}` };
+          const { name, description, allowedTools } = parseFrontmatter(raw);
+          return { type, name: name || file.name.replace('.md',''), description, allowedTools, path: `${apiPath}/${file.name}` };
         } catch {
-          return { type, name: file.name.replace('.md',''), description: null, path: `${apiPath}/${file.name}` };
+          return { type, name: file.name.replace('.md',''), description: null, allowedTools: [], path: `${apiPath}/${file.name}` };
         }
       })
     );
@@ -592,6 +736,7 @@ async function loadSingleFileSection({ gridId, countId, apiPath, type }) {
     countEl.textContent = items.length;
     grid.innerHTML = items.map(cardHtml).join('');
     grid.querySelectorAll('.card').forEach(card => card.addEventListener('click', onCardClick));
+    initSectionFilters(gridId, `search-${gridId.replace('grid-','')}`, `hint-${gridId.replace('grid-','')}`);
   } catch (err) {
     if (err.message === 'rate_limit') {
       grid.innerHTML = noticeHtml('⚠️ Rate limit atingido. Tente em alguns minutos.', 'warn');
@@ -603,14 +748,17 @@ async function loadSingleFileSection({ gridId, countId, apiPath, type }) {
 }
 
 async function onCardClick(e) {
+  if (e.target.closest('.tag')) return;
   const card = e.currentTarget;
   const path = card.dataset.path;
   const title = card.dataset.title;
   const overlay = document.getElementById('modal-overlay');
   const content = document.getElementById('modal-content');
   const modalTitle = document.getElementById('modal-title');
+  const ghLink = document.getElementById('modal-gh-link');
 
   modalTitle.textContent = title;
+  ghLink.href = `https://github.com/${OWNER}/${REPO}/blob/${BRANCH}/${path}`;
   content.innerHTML = '<p style="color:var(--text-dim)">carregando...</p>';
   overlay.classList.add('open');
 
