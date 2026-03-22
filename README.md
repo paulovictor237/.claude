@@ -42,6 +42,18 @@ curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/instal
 
 ---
 
+### Peon Ping
+
+Notificações sonoras com vozes de personagens para o Claude Code.
+
+- Site: https://www.peonping.com/
+
+```bash
+brew install peonping/tap/peon-ping
+```
+
+---
+
 ### CodeGraph
 
 Grafo semântico de código para navegação inteligente.

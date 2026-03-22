@@ -14,26 +14,54 @@
     ],
     "defaultMode": "default"
   },
-  "model": "opus[1m]",
   "hooks": {
-    "Notification": [
+    "SessionStart": [
       {
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e 'display notification \"O Claude precisa de atenção\" with title \"Claude Code\"' && afplay /System/Library/Sounds/Glass.aiff"
+            "command": "/Users/peve/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10
           }
         ]
       }
     ],
-    "PermissionRequest": [
+    "SessionEnd": [
       {
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e 'display notification \"Solicitação de Permissão\" with title \"Claude Code\"' && afplay /System/Library/Sounds/Glass.aiff"
+            "command": "/Users/peve/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/peve/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/peve/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10,
+            "async": true
           }
         ]
       }
@@ -44,39 +72,61 @@
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e 'display notification \"Tarefa Concluída/Parada\" with title \"Claude Code\"' && afplay /System/Library/Sounds/Glass.aiff"
-          }
-        ]
-      },
-      {
-        "matcher": ".*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "codegraph sync-if-dirty"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "codegraph mark-dirty",
+            "command": "/Users/peve/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10,
             "async": true
           }
         ]
       }
     ],
-    "PreToolUse": [
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/peve/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/peve/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
       {
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/peve/.claude/hooks/rtk-rewrite.sh"
+            "command": "/Users/peve/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/peve/.claude/hooks/peon-ping/peon.sh",
+            "timeout": 10,
+            "async": true
           }
         ]
       }
